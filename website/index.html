@@ -440,6 +440,30 @@
     html{scroll-behavior:auto}
     .shine{-webkit-text-fill-color:#dff4ef; color:#dff4ef}
   }
+
+  /* ---------- Windows SmartScreen heads-up (shown before either Windows download starts) ---------- */
+  .dln-backdrop{position:fixed; inset:0; z-index:60; background:rgba(6,10,12,.72); backdrop-filter:blur(3px);
+    display:flex; align-items:center; justify-content:center; padding:var(--s3);
+    opacity:0; visibility:hidden; transition:opacity .22s var(--ease)}
+  .dln-backdrop.open{opacity:1; visibility:visible}
+  .dln-card{width:100%; max-width:440px; background:var(--surface); border:1px solid var(--line);
+    border-radius:var(--radius-lg); padding:var(--s4);
+    box-shadow:0 20px 48px -16px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.03);
+    transform:translateY(10px) scale(.98); transition:transform .25s var(--ease)}
+  .dln-backdrop.open .dln-card{transform:none}
+  .dln-icon{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:rgba(93,202,165,.14); border:1px solid rgba(93,202,165,.32); color:var(--teal-lite); margin-bottom:var(--s2)}
+  .dln-card h3{font-size:1.15rem; margin-bottom:10px}
+  .dln-card p{color:var(--muted); font-size:.92rem; line-height:1.6; margin:0 0 12px}
+  .dln-card p:last-of-type{margin-bottom:0}
+  .dln-card strong{color:var(--ink); font-weight:600}
+  .dln-actions{display:flex; gap:10px; margin-top:var(--s3)}
+  .dln-btn{flex:1; text-align:center; padding:11px 16px; border-radius:999px; font-family:'Poppins',sans-serif;
+    font-weight:700; font-size:.85rem; cursor:pointer; border:1px solid var(--line); background:transparent;
+    color:var(--muted); transition:all .2s var(--ease); text-decoration:none; display:inline-block}
+  .dln-btn:hover{color:var(--ink); border-color:var(--brand-500)}
+  .dln-btn.primary{background:linear-gradient(135deg,var(--teal-lite),var(--mint)); border-color:transparent; color:#04262e}
+  .dln-btn.primary:hover{color:#04262e; filter:brightness(1.06)}
 </style>
 </head>
 <body>
@@ -497,7 +521,6 @@
       <a href="#validation">Accuracy</a>
       <a href="#who">Who It's For</a>
       <a href="#faq">FAQ</a>
-      <a href="#download">Download</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -515,13 +538,13 @@
     </p>
     <div class="dl-heading rise d4" id="download"><span>Download It</span></div>
     <div class="nameplate rise d4">
-      <a class="np-row" href="#">
+      <a class="np-row js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch.Suite.Setup.2.0.0.exe">
         <span class="np-name">Windows Installer <span class="arrow">&rarr;</span></span>
-        <div class="np-meta">224 MB &middot; Windows 10 &amp; 11</div>
+        <div class="np-meta">Windows 10 &amp; 11</div>
       </a>
-      <a class="np-row" href="#">
+      <a class="np-row js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch.Suite-2.0.0-win.zip">
         <span class="np-name">Windows Portable <span class="arrow">&rarr;</span></span>
-        <div class="np-meta">273 MB &middot; no install, no admin rights, nothing left behind</div>
+        <div class="np-meta">no install, no admin rights, nothing left behind</div>
       </a>
       <div class="np-row pending">
         <span class="np-name">macOS</span>
@@ -946,6 +969,21 @@
   </div>
 </footer>
 
+<div class="dln-backdrop" id="dlnBackdrop" role="dialog" aria-modal="true" aria-labelledby="dlnTitle" hidden>
+  <div class="dln-card">
+    <div class="dln-icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"></path></svg>
+    </div>
+    <h3 id="dlnTitle">One Thing To Expect</h3>
+    <p>MedResearch Suite is independent software, published without the paid commercial certificate Windows checks for automatically. Because of that, <strong>Windows SmartScreen may show a "Windows Protected Your PC" warning</strong> the first time you run it.</p>
+    <p>This is expected for new, independently published software, and is not a sign of a virus. If you see it, click <strong>More Info</strong>, then <strong>Run Anyway</strong> to continue.</p>
+    <div class="dln-actions">
+      <button type="button" class="dln-btn" id="dlnCancel">Cancel</button>
+      <a href="#" class="dln-btn primary" id="dlnContinue">Continue Download</a>
+    </div>
+  </div>
+</div>
+
 <script>
   // Keeps the sticky section nav flush against the masthead's real height instead of a hard coded
   // number. On narrow phones the brand title wraps to two lines, so the masthead is taller than its
@@ -1260,6 +1298,49 @@
     build(q1, SHAPES, shape, pickShape);
     build(q2, CONDS[shape], cond, pickCond);
     render(false);
+  })();
+
+  // Windows SmartScreen heads-up: intercepts both Windows download links, shows a plain-language
+  // explanation first, and only starts the real download once the visitor confirms.
+  (function () {
+    var winLinks = Array.prototype.slice.call(document.querySelectorAll('.js-win-download'));
+    var backdrop = document.getElementById('dlnBackdrop');
+    if (!winLinks.length || !backdrop) return;
+    var continueBtn = document.getElementById('dlnContinue');
+    var cancelBtn = document.getElementById('dlnCancel');
+    var pendingHref = null;
+    var lastFocused = null;
+
+    function onKeydown(e) { if (e.key === 'Escape') close(); }
+    function open(href) {
+      pendingHref = href;
+      lastFocused = document.activeElement;
+      backdrop.hidden = false;
+      requestAnimationFrame(function () { backdrop.classList.add('open'); });
+      document.addEventListener('keydown', onKeydown);
+      cancelBtn.focus();
+    }
+    function close() {
+      backdrop.classList.remove('open');
+      document.removeEventListener('keydown', onKeydown);
+      setTimeout(function () { backdrop.hidden = true; }, 220);
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    winLinks.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        open(a.getAttribute('href'));
+      });
+    });
+    continueBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var href = pendingHref;
+      close();
+      if (href) window.location.href = href;
+    });
+    cancelBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
   })();
 </script>
 </body>
