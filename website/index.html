@@ -385,6 +385,10 @@
        they need to be comfortably readable, not just decoratively small. */
     .proof .lbl{font-size:.85rem}
     .note{font-size:.85rem}
+    /* Fixed instead of the fluid clamp() above: the fluid size only fails to fit
+       "support@medresearchsuite.com" on one line in a narrow band of small phones, but a
+       fixed, deliberately smaller size removes that guesswork entirely across every phone. */
+    .mailto{font-size:.9rem}
   }
 
   /* ---------- the test picker: the app's selection rule, playable ---------- */
