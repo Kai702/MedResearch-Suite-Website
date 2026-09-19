@@ -543,11 +543,11 @@
     </p>
     <div class="dl-heading rise d4" id="download"><span>Download It</span></div>
     <div class="nameplate rise d4">
-      <a class="np-row js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch.Suite.Setup.2.0.0.exe">
+      <a class="np-row js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.exe">
         <span class="np-name">Windows Installer <span class="arrow">&rarr;</span></span>
         <div class="np-meta">Windows 10 &amp; 11</div>
       </a>
-      <a class="np-row js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch.Suite-2.0.0-win.zip">
+      <a class="np-row js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.zip">
         <span class="np-name">Windows Portable <span class="arrow">&rarr;</span></span>
         <div class="np-meta">no install, no admin rights, nothing left behind</div>
       </a>
@@ -617,15 +617,17 @@
     <figure class="shot rv" style="margin-bottom:var(--s5)">
       <div class="frame">
         <img src="assets/app_analytics.png" width="1440" height="900" loading="lazy" decoding="async"
-             alt="The Analytics workspace showing an automatically selected One-Way ANOVA with green assumption check chips and a plain English write up of the result.">
+             alt="The Analytics workspace showing an automatically selected Welch's ANOVA with green assumption check chips and a plain English write up of the result.">
         <div class="veil" style="mask:url(#mask-analytics); -webkit-mask:url(#mask-analytics)"></div>
         <span class="spot" style="left:8%; top:64.5%; width:66%; height:5%"></span>
       </div>
       <figcaption>
         <b>Analytics. The Test Chose Itself.</b>
-        A three group dataset went in. The app selected a One-Way ANOVA, ran a Shapiro-Wilk normality check on every
-        group, confirmed equal variances, and returned F(2,12) = 368.6, p &lt; 0.001, η² = 0.984, with a plain-English
-        write-up you can copy straight into a manuscript. No test was chosen by hand.
+        A three group dataset went in. The app ran a Shapiro-Wilk normality check on every group, selected Welch's
+        ANOVA on the strength of it, and returned Welch's F(2, 7.9) = 340.35, p &lt; 0.001, η² = 0.984, with
+        Games-Howell post-hoc comparisons and a plain-English write-up you can copy straight into a manuscript.
+        Levene's test is reported too, and here it says the variances agree. Welch is still what runs, because the
+        default does not depend on that holding. No test was chosen by hand.
       </figcaption>
     </figure>
 
@@ -673,10 +675,13 @@
       </div>
     </div>
     <p class="fine rv" style="margin-top:var(--s3)">
-      This is where the app starts, not where it stops. The rank based tests compare whole distributions, so they
-      answer a question about medians only when the groups have a similar shape, and a t test survives a lot of
-      skew once the sample is reasonably large. The app checks those things on your actual data and shows its
-      reasoning, which is the part a flowchart cannot do for you.
+      This is where the app starts, not where it stops. Every default above was picked by simulation rather than by
+      habit, and the pattern is the same each time: where the textbook choice depends on an assumption that is easy
+      to break, the app takes the one that does not. That is why a Welch test is the default even when the variances
+      agree, and why the non-normal answers are Brunner-Munzel and the ANOVA-type statistic rather than Mann-Whitney
+      and Kruskal-Wallis, which quietly need the groups to share a shape. The familiar tests are all still there when
+      you want them. The app checks the assumptions on your actual data and shows its reasoning, which is the part a
+      flowchart cannot do for you.
     </p>
     <noscript>
       <p class="deck">The picker needs JavaScript to run. The complete list of tests, and the R package each one
@@ -749,7 +754,11 @@
       <h2>Validated against R.</h2>
       <p class="deck">Ease of use is worthless if the numbers are wrong. Every statistic the app can produce has been
          run against R's gold standard packages on the same data and compared to displayed precision. Here is exactly
-         what was checked against what.</p>
+         what was checked against what. The reference set is base R's <b>stats</b> together with
+         <b>afex</b>, <b>brunnermunzel</b>, <b>car</b>, <b>epiR</b>, <b>FSA</b>, <b>irr</b>, <b>lawstat</b>,
+         <b>logistf</b>, <b>MASS</b>, <b>MBESS</b>, <b>metafor</b>, <b>nnet</b>, <b>pROC</b>, <b>psych</b>,
+         <b>pwr</b>, <b>rankFD</b>, <b>rstatix</b> and <b>survival</b>. Where no R package implements a statistic,
+         the formula is computed directly in R and named as such, never left unchecked.</p>
     </div>
 
     <details class="acc"><summary>Group comparisons and post-hoc tests</summary><div class="acc-body">
@@ -762,16 +771,19 @@
         <tr><td>Welch ANOVA</td><td>oneway.test</td></tr>
         <tr><td>Two-way ANOVA with interaction, Type II</td><td>car::Anova</td></tr>
         <tr><td>ANCOVA, Type II</td><td>car::Anova</td></tr>
-        <tr><td>Repeated-measures ANOVA, partial eta squared</td><td>verified against R</td></tr>
-        <tr><td>Mauchly sphericity, Greenhouse-Geisser, Huynh-Feldt</td><td>verified against R</td></tr>
+        <tr><td>Repeated-measures ANOVA, partial eta squared</td><td>afex::aov_ez</td></tr>
+        <tr><td>Mauchly sphericity, Greenhouse-Geisser, Huynh-Feldt</td><td>afex::aov_ez, stats::mauchly.test</td></tr>
         <tr><td>Friedman and Kendall's W</td><td>friedman.test</td></tr>
-        <tr><td>Cochran's Q</td><td>verified against R</td></tr>
+        <tr><td>Cochran's Q</td><td>Cochran formula in R, stats::pchisq</td></tr>
         <tr><td>Mann-Whitney U, exact and tied</td><td>wilcox.test</td></tr>
         <tr><td>Wilcoxon signed-rank</td><td>wilcox.test (paired)</td></tr>
         <tr><td>Kruskal-Wallis and epsilon squared</td><td>kruskal.test</td></tr>
+        <tr><td>Brunner-Munzel, with a permutation p under 30 per group</td><td>lawstat::brunner.munzel.test, brunnermunzel</td></tr>
+        <tr><td>ANOVA-type statistic on pseudo-ranks, relative effects</td><td>rankFD::rankFD</td></tr>
+        <tr><td>Pairwise Brunner-Munzel, Holm adjusted</td><td>brunnermunzel (permutation), p.adjust (holm)</td></tr>
         <tr><td>Tukey HSD</td><td>TukeyHSD</td></tr>
-        <tr><td>Dunn (tie corrected) and Games-Howell</td><td>verified against R</td></tr>
-        <tr><td>Levene (Brown-Forsythe) variance check</td><td>verified against R</td></tr>
+        <tr><td>Dunn (tie corrected) and Games-Howell</td><td>FSA::dunnTest, rstatix::games_howell_test</td></tr>
+        <tr><td>Levene (Brown-Forsythe) variance check</td><td>car::leveneTest</td></tr>
         <tr><td>TOST equivalence</td><td>Schuirmann, Welch</td></tr>
       </table>
     </div></details>
@@ -810,7 +822,7 @@
         <thead><tr><th scope="col">Statistic</th><th scope="col">Checked against</th></tr></thead>
         <tr><td>DerSimonian-Laird pooled estimate and CI</td><td>metafor::rma (DL)</td></tr>
         <tr><td>Hartung-Knapp-Sidik-Jonkman</td><td>metafor::rma (knha)</td></tr>
-        <tr><td>Prediction interval (IntHout t, k-2 df)</td><td>metafor</td></tr>
+        <tr><td>Prediction interval (IntHout t, k-2 df)</td><td>metafor::rma, IntHout 2016 t(k-2) recomputed</td></tr>
         <tr><td>Begg and Mazumdar rank correlation</td><td>metafor::ranktest</td></tr>
         <tr><td>Egger regression</td><td>metafor::regtest</td></tr>
         <tr><td>Diagnostic meta-analysis, pooled Se and Sp</td><td>metafor (PLO, DL)</td></tr>
@@ -820,12 +832,12 @@
     <details class="acc"><summary>Survival and diagnostics</summary><div class="acc-body">
       <table class="vtab">
         <thead><tr><th scope="col">Statistic</th><th scope="col">Checked against</th></tr></thead>
-        <tr><td>Kaplan-Meier medians and log rank</td><td>survival</td></tr>
-        <tr><td>Cox proportional hazards, HR and C-index</td><td>survival</td></tr>
-        <tr><td>Competing risks, Aalen-Johansen CIF</td><td>survival</td></tr>
+        <tr><td>Kaplan-Meier medians and log rank</td><td>survival::survfit, survival::survdiff</td></tr>
+        <tr><td>Cox proportional hazards, HR and C-index</td><td>survival::coxph</td></tr>
+        <tr><td>Competing risks, Aalen-Johansen CIF</td><td>survival::survfit (multi-state)</td></tr>
         <tr><td>Clopper-Pearson exact proportion CI</td><td>binom.test</td></tr>
         <tr><td>Likelihood ratio and DOR intervals</td><td>epiR::epi.tests</td></tr>
-        <tr><td>ROC AUC and DeLong interval</td><td>verified against R</td></tr>
+        <tr><td>ROC AUC and DeLong interval</td><td>pROC::roc, pROC::ci.auc</td></tr>
       </table>
     </div></details>
 
@@ -833,8 +845,8 @@
       <table class="vtab">
         <thead><tr><th scope="col">Statistic</th><th scope="col">Checked against</th></tr></thead>
         <tr><td>All six ICC forms with F based CIs</td><td>psych::ICC</td></tr>
-        <tr><td>Fleiss kappa</td><td>irr</td></tr>
-        <tr><td>Hedges' g with noncentral t CI</td><td>MBESS</td></tr>
+        <tr><td>Fleiss kappa</td><td>irr::kappam.fleiss</td></tr>
+        <tr><td>Hedges' g with noncentral t CI</td><td>MBESS::ci.smd</td></tr>
         <tr><td>Cohen's d_z with noncentral t CI</td><td>noncentral t, independently recomputed</td></tr>
         <tr><td>Correlation sample size</td><td>pwr::pwr.r.test</td></tr>
         <tr><td>Unequal allocation t test sample size</td><td>pwr::pwr.t2n.test</td></tr>
@@ -925,7 +937,7 @@
       downloadable templates so the column layout is unambiguous, and the importer maps your columns for you.</p></div></details>
 
     <details class="acc"><summary>Which operating systems are supported?</summary><div class="acc-body">
-      <p>Windows 10 and 11 today, as an installer or the portable build, at roughly 250 MB. A macOS version is in
+      <p>Windows 10 and 11 today, as a 214 MB installer or a 261 MB portable build. A macOS version is in
       preparation and will be signed and notarized by Apple so it opens without warnings.</p></div></details>
 
     <details class="acc"><summary>Does it use AI, and does that see my data?</summary><div class="acc-body">
@@ -1226,10 +1238,10 @@
     var R = {
       'two|neq':    { t: "Welch's t-test", w: 'The variances agree, so a Student’s t-test would be valid here too. The app still runs Welch by default: when the variances really are equal Welch costs about one point of power, and when they are not it is the only one of the two that stays honest. Student’s is there as a deliberate choice, for when you need to reproduce a published analysis.', m: "Comes with <b>Hedges' g</b> and a 95% CI. Both are checked against R's <b>t.test</b>." },
       'two|nuq':    { t: "Welch's t-test", w: 'The variances differ, which is exactly the case a Student’s t-test gets wrong: with the smaller group carrying the larger variance, its false-positive rate reaches about 28% against a nominal 5%, while Welch holds at 5%. Same answer as the equal-variance case above, and that is the point. The default never rests on an assumption this easy to break.', m: "Comes with <b>Hedges' g</b> and a 95% CI. Checked against R's <b>t.test</b>." },
-      'two|nn':     { t: 'Mann-Whitney U', w: 'Normality fails, so the comparison moves off means and onto ranks. Exact where the sample is small, tie corrected where it is not. It compares whole distributions, so it reads as a median comparison when the two groups have a similar shape.', m: 'Comes with a <b>rank-biserial</b> effect size. Checked against R\'s <b>wilcox.test</b>.' },
-      'many|neq':   { t: 'One-Way ANOVA', w: 'Three or more groups, all normal, variances equal. The omnibus test runs first, and post-hoc comparisons only follow if it is significant.', m: "Post-hoc <b>Tukey HSD</b>, with <b>&eta;&sup2;</b> and <b>&omega;&sup2;</b>. Checked against R's <b>aov</b>." },
-      'many|nuq':   { t: "Welch's ANOVA", w: 'Normal, but the variances are unequal, which breaks a standard ANOVA assumption. The app reads this off Levene’s test and switches to Welch’s ANOVA on its own, rather than leaving a prompt for you to dismiss. On unequal variances a classic ANOVA can reject a true null about 31% of the time against a nominal 5%.', m: "Post-hoc <b>Games-Howell</b>. Checked against R's <b>oneway.test</b>." },
-      'many|nn':    { t: 'Kruskal-Wallis H', w: 'Normality fails across three or more groups, so the omnibus test moves to ranks. Like Mann-Whitney, it compares distributions, and reads cleanly as a median comparison when the groups have a similar shape.', m: "Post-hoc <b>Dunn</b>, tie corrected, with <b>&epsilon;&sup2;</b>. Checked against R's <b>kruskal.test</b>." },
+      'two|nn':     { t: 'Brunner-Munzel', w: 'Normality fails, so the comparison moves off means. Mann-Whitney is the familiar answer here, and it is the wrong default: it assumes the two groups share a shape and a spread, and when they do not, it is no longer testing what you think it is. Brunner-Munzel drops that assumption. It asks the plainer question directly, whether a value drawn from one group tends to be larger than a value drawn from the other, and stays honest when the spreads differ.', m: "Reports P(X &lt; Y) + &frac12;P(X = Y) with a 95% CI. Under 30 per group the p-value comes from the permutation distribution rather than an approximation. Checked against R\'s <b>lawstat::brunner.munzel.test</b> and <b>brunnermunzel</b>. Mann-Whitney is still there as a deliberate choice." },
+      'many|neq':   { t: "Welch's ANOVA", w: 'Three or more groups, all normal, variances equal. A one-way ANOVA would be valid here, and the app still runs Welch, for exactly the reason it does with two groups: when the variances really are equal Welch gives up almost nothing, and when they are not it is the only one of the two that holds its false-positive rate. The default does not rest on an assumption this easy to break. The omnibus test runs first, and post-hoc comparisons only follow if it is significant.', m: "Post-hoc <b>Games-Howell</b>. Checked against R's <b>oneway.test</b>. One-way ANOVA, with Tukey HSD, <b>&eta;&sup2;</b> and <b>&omega;&sup2;</b>, is still there as a deliberate choice." },
+      'many|nuq':   { t: "Welch's ANOVA", w: 'Normal, but the variances are unequal, which breaks a standard ANOVA assumption. Same answer as the equal-variance case above, and that is the point: the app does not wait to detect this before protecting you from it. On unequal variances a classic ANOVA can reject a true null about 31% of the time against a nominal 5%. Levene’s test is still run and reported alongside the result, as an assumption you can see rather than a switch you have to trust.', m: "Post-hoc <b>Games-Howell</b>. Checked against R's <b>oneway.test</b>." },
+      'many|nn':    { t: 'ANOVA-type statistic', w: 'Normality fails across three or more groups. Kruskal-Wallis is the familiar answer, and it carries the same flaw as Mann-Whitney: it leans on the groups sharing a shape, and unequal spreads quietly break it. The ANOVA-type statistic does not. It works on pseudo-ranks, which weight every group equally whatever its size, and refers the result to an F distribution with estimated degrees of freedom. This is the three-group counterpart of the choice made above.', m: "Reports a relative effect per group. Post-hoc pairwise <b>Brunner-Munzel</b>, Holm-adjusted. Checked against R's <b>rankFD::rankFD</b>. Kruskal-Wallis, with Dunn and <b>&epsilon;&sup2;</b>, is still there as a deliberate choice." },
       'paired|n':   { t: 'Paired t-test', w: 'The same subjects measured twice, with roughly normal differences. Pairing strips out between-subject noise, so this is far more powerful than treating the groups as independent.', m: "Comes with <b>Cohen's d<sub>z</sub></b> and a noncentral t interval. Checked against R's <b>t.test (paired)</b>." },
       'paired|nn':  { t: 'Wilcoxon signed-rank', w: 'Paired measurements whose differences are not normal, so the test ranks the differences rather than averaging them.', m: "Checked against R's <b>wilcox.test (paired)</b>." },
       'cat|big':    { t: 'Chi-square test', w: 'A contingency table with healthy expected counts, so the chi-square approximation holds. Yates’ correction is applied to 2x2 tables.', m: "Comes with <b>Cram&eacute;r's V</b>. Checked against R's <b>chisq.test</b>." },
@@ -1238,7 +1250,7 @@
       'corr|n':     { t: 'Pearson correlation', w: 'Two numeric variables with a roughly linear, normal relationship.', m: "With a 95% CI on <b>r</b>. Checked against R's <b>cor.test</b>." },
       'corr|nn':    { t: 'Spearman correlation', w: 'The relationship is monotonic rather than linear, or normality fails, so the correlation is computed on ranks. At nine or fewer observations with no ties, the p-value comes from enumerating every permutation rather than from a large-sample approximation. That approximation is anti-conservative exactly where pilot studies live: at n = 6 it reports a p roughly three and a half times smaller than the true one.', m: "With a 95% CI on <b>rho</b>. Matches R's <b>cor.test</b> exactly across n = 3 to 9, which is precisely the range R itself enumerates." },
       'corr|tied':  { t: "Kendall's tau-b", w: 'Ordinal data, or numeric data carrying many repeated values. Tau-b counts concordant against discordant pairs and corrects for ties, which is where it holds up better than Spearman: ties are also the case the exact permutation route cannot cover.', m: "Checked against R's <b>cor.test(method = 'kendall')</b>." },
-      'rep|n':      { t: 'Repeated-measures ANOVA', w: 'The same subjects measured at three or more timepoints. Treating those as independent groups throws away the pairing and inflates the error term. Sphericity is tested rather than assumed: when Mauchly’s test fails, the reported p is the Greenhouse-Geisser corrected one, not the raw F test.', m: "With <b>partial &eta;&sup2;</b>, Mauchly’s W, and Greenhouse-Geisser and Huynh-Feldt corrections. Checked against R." },
+      'rep|n':      { t: 'Repeated-measures ANOVA', w: 'The same subjects measured at three or more timepoints. Treating those as independent groups throws away the pairing and inflates the error term. Sphericity is corrected rather than assumed: the reported p is the Greenhouse-Geisser one, applied whatever Mauchly’s test says, as R’s afex package does by default. Correcting only after a failed Mauchly test makes the result depend on a screening test that is itself underpowered in small samples, which is where repeated-measures designs usually live.', m: "With <b>partial &eta;&sup2;</b>, Mauchly’s W, and both Greenhouse-Geisser and Huynh-Feldt corrections reported. Checked against R’s <b>afex</b>." },
       'rep|nn':     { t: 'Friedman test', w: 'Three or more measurements on the same subjects whose values are not normal, so the test ranks within each subject rather than averaging across them.', m: "With <b>Kendall's W</b> as the effect size. Checked against R's <b>friedman.test</b>." },
       'rep|bin':    { t: "Cochran's Q", w: 'Three or more yes or no measurements on the same subjects: the binary form of the repeated-measures question, where an ANOVA has nothing to average.', m: "Post-hoc pairwise <b>McNemar</b>, Bonferroni adjusted. Checked against R." },
       'one|n':      { t: 'One-sample t-test', w: 'One group measured against a fixed reference value rather than against another group, such as a guideline threshold or a published mean. The reference has to come from you. The app will not invent one, and it declines outright if the column has no variability, rather than returning the p = 0 that a zero standard error technically produces.', m: "Comes with <b>Cohen's d</b> and a 95% CI on the mean. Checked against R's <b>t.test(mu = )</b>." },
