@@ -66,7 +66,7 @@
     { "@type": "Question", "name": "Can I install it on a locked down hospital computer?",
       "acceptedAnswer": { "@type": "Answer", "text": "Yes. Alongside the installer there is a portable build you extract to any folder you can write to. No installation, no administrator rights, and no registry changes." } },
     { "@type": "Question", "name": "How do I know the numbers are right?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Every test in the analysis menu is checked against R on the same data, and the app matches to the precision it displays. An automated harness re-runs 461 checks, 244 of them comparisons against stored values from R's own packages, and it has to pass before any release. The comparisons are in the repository, so you can run them yourself rather than take our word for it." } }
+      "acceptedAnswer": { "@type": "Answer", "text": "Every test in the analysis menu is checked against R on the same data, and the app matches to the precision it displays. An automated harness re-runs 472 checks, 252 of them comparisons against stored values from R's own packages, and it has to pass before any release. The comparisons are in the repository, so you can run them yourself rather than take our word for it." } }
   ]
 }
 </script>
@@ -577,7 +577,7 @@
   <!-- ================= PILLARS ================= -->
   <section class="sec wrap" style="border-top:0; padding-top:var(--s5)">
     <div class="proof rv">
-      <div><span class="num" data-count="56">56</span><p class="lbl">statistics cross-checked against R</p></div>
+      <div><span class="num" data-count="57">57</span><p class="lbl">statistics cross-checked against R</p></div>
       <div><span class="num" data-count="6">6</span><p class="lbl">workspaces, question to manuscript</p></div>
       <div><span class="num" data-count="18">18</span><p class="lbl">HIPAA identifiers the scanner knows</p></div>
       <div><span class="num" data-count="0">0</span><p class="lbl">bytes of your data ever transmitted</p></div>
@@ -741,7 +741,7 @@
       <div class="cap rv"><i>01</i><h3>Discovery</h3><p>Measure how much has already been published on your question through PubMed, and how many trials are registered or running through ClinicalTrials.gov, with a study type breakdown.</p></div>
       <div class="cap rv"><i>02</i><h3>Sample Size</h3><p>Power analysis for t tests, ANOVA, proportions, and correlations, with unequal allocation and one sided options.</p></div>
       <div class="cap rv"><i>03</i><h3>Analytics</h3><p>Automatic test selection with assumption checks, effect sizes, multivariable models, survival, and reliability.</p></div>
-      <div class="cap rv"><i>04</i><h3>Meta-Analysis</h3><p>Forest, funnel, leave one out, and cumulative plots. Fixed, random, HKSJ, prediction intervals, Egger, and Begg.</p></div>
+      <div class="cap rv"><i>04</i><h3>Meta-Analysis</h3><p>Forest, funnel, leave one out, and cumulative plots. Fixed, random, HKSJ and modified HKSJ, prediction intervals, Egger, and Begg.</p></div>
       <div class="cap rv"><i>05</i><h3>Diagnostics</h3><p>2x2 tables, ROC and AUC, likelihood ratios, predictive values, kappa, and a Bayesian probability revision plot.</p></div>
       <div class="cap rv"><i>06</i><h3>Visualizations</h3><p>Box, violin, raincloud, Bland-Altman, Q-Q, heatmaps, and PRISMA, CONSORT, and STROBE diagrams.</p></div>
     </div>
@@ -822,6 +822,7 @@
         <thead><tr><th scope="col">Statistic</th><th scope="col">Checked against</th></tr></thead>
         <tr><td>DerSimonian-Laird pooled estimate and CI</td><td>metafor::rma (DL)</td></tr>
         <tr><td>Hartung-Knapp-Sidik-Jonkman</td><td>metafor::rma (knha)</td></tr>
+        <tr><td>Modified Hartung-Knapp-Sidik-Jonkman</td><td>metafor::rma (adhoc)</td></tr>
         <tr><td>Prediction interval (IntHout t, k-2 df)</td><td>metafor::rma, IntHout 2016 t(k-2) recomputed</td></tr>
         <tr><td>Begg and Mazumdar rank correlation</td><td>metafor::ranktest</td></tr>
         <tr><td>Egger regression</td><td>metafor::regtest</td></tr>
@@ -965,8 +966,8 @@
 
     <details class="acc"><summary>How do I know the numbers are right?</summary><div class="acc-body">
       <p>Every test in the analysis menu has been checked against R's gold standard packages on the same data, and
-      matches to the precision it displays. The full list is in the section above. An automated harness re-runs 461
-      checks, 244 of them comparisons against stored values from R's own packages, and it has to pass before any
+      matches to the precision it displays. The full list is in the section above. An automated harness re-runs 472
+      checks, 252 of them comparisons against stored values from R's own packages, and it has to pass before any
       release, so a change cannot silently break a result. The comparisons are in the repository, so you can run them
       yourself rather than take our word for it.</p></div></details>
 
