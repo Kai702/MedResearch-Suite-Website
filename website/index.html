@@ -28,7 +28,8 @@
 <meta name="twitter:description" content="It picks the right statistical test, checks the assumptions, and draws the figure your journal expects. Validated against R. Nothing leaves your computer.">
 <meta name="twitter:image" content="https://medresearchsuite.com/assets/app_meta.png">
 <!-- Structured data. Lets the app appear as a rich result, and the FAQ answer directly in search.
-     NOTE: url/image must match the real published domain. See PUBLISH_CHECKLIST.md -->
+     NOTE: url/image must match the real published domain. See WEBSITE_PUBLISH_CHECKLIST.md at the
+     repository root, kept outside this folder so it is not published with the site. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -58,7 +59,7 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "How much does it cost?",
-      "acceptedAnswer": { "@type": "Answer", "text": "It is free. No account, no sign up, and no licence key." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "It is free. No account, no sign up, and no license key." } },
     { "@type": "Question", "name": "Does my patient data leave my computer?",
       "acceptedAnswer": { "@type": "Answer", "text": "No. There is no cloud, no account, and no upload. The statistics engine runs on your own machine, and the app works with no internet connection." } },
     { "@type": "Question", "name": "Is it HIPAA compliant?",
@@ -538,8 +539,8 @@
     <div class="rise d2"><h1 class="shine">Your statistics, start to finish, on your own machine.</h1></div>
     <p class="lede rise d3">
       MedResearch Suite picks the right statistical test, runs it, checks the assumptions, and draws the
-      figure your journal expects. Every number is validated against R, and the whole engine runs locally,
-      so your dataset never goes online.
+      figure your journal expects. Every test in the analysis menu is validated against R, and the whole
+      engine runs locally, so your dataset never goes online.
     </p>
     <div class="dl-heading rise d4" id="download"><span>Download It</span></div>
     <div class="nameplate rise d4">
@@ -577,7 +578,7 @@
   <!-- ================= PILLARS ================= -->
   <section class="sec wrap" style="border-top:0; padding-top:var(--s5)">
     <div class="proof rv">
-      <div><span class="num" data-count="57">57</span><p class="lbl">statistics cross-checked against R</p></div>
+      <div><span class="num" data-count="59">59</span><p class="lbl">statistics cross-checked against R</p></div>
       <div><span class="num" data-count="6">6</span><p class="lbl">workspaces, question to manuscript</p></div>
       <div><span class="num" data-count="18">18</span><p class="lbl">HIPAA identifiers the scanner knows</p></div>
       <div><span class="num" data-count="0">0</span><p class="lbl">bytes of your data ever transmitted</p></div>
@@ -643,7 +644,8 @@
         <b>Diagnostics. Curve and Statistics Together.</b>
         A raw biomarker column and its true labels produced the ROC curve, an area under the curve of 0.901
         (95% CI 0.836 to 0.967), the Youden optimal cutoff at ≥ 4.89, and sensitivity and specificity of 84.4% and
-        83.6%. Likelihood ratios, predictive values, and Cohen's kappa come with it.
+        83.6%. Likelihood ratios, predictive values, and Cohen's kappa come from the 2x2 analysis in the same
+        workspace.
       </figcaption>
     </figure>
   </section>
@@ -653,8 +655,10 @@
     <div class="sechead rv">
       <p class="eyebrow"><span class="step">02</span> The rule, in your hands</p>
       <h2>Which test would it choose?</h2>
-      <p class="deck">This is the decision the app makes the moment you mark your columns, and it is the one most
-         projects get wrong. Tell it what your data looks like and watch it choose. Nothing to download.</p>
+      <p class="deck">For group comparisons, paired data, and tables, this is the decision the app makes the moment
+         you mark your columns. For the other designs, it is the test the app's guide points you to under Change
+         Test. It is the choice most projects get wrong. Tell it what your data looks like and watch it choose.
+         Nothing to download.</p>
     </div>
     <div class="picker rv">
       <div>
@@ -743,7 +747,7 @@
       <div class="cap rv"><i>03</i><h3>Analytics</h3><p>Automatic test selection with assumption checks, effect sizes, multivariable models, survival, and reliability.</p></div>
       <div class="cap rv"><i>04</i><h3>Meta-Analysis</h3><p>Forest, funnel, leave one out, and cumulative plots. Fixed, random, HKSJ and modified HKSJ, prediction intervals, Egger, and Begg.</p></div>
       <div class="cap rv"><i>05</i><h3>Diagnostics</h3><p>2x2 tables, ROC and AUC, likelihood ratios, predictive values, kappa, and a Bayesian probability revision plot.</p></div>
-      <div class="cap rv"><i>06</i><h3>Visualizations</h3><p>Box, violin, raincloud, Bland-Altman, Q-Q, heatmaps, and PRISMA, CONSORT, and STROBE diagrams.</p></div>
+      <div class="cap rv"><i>06</i><h3>Visualizations</h3><p>Box, violin, raincloud, Bland-Altman, Q-Q, heatmaps, and PRISMA 2020, CONSORT, and STROBE diagrams.</p></div>
     </div>
   </section>
 
@@ -846,7 +850,9 @@
       <table class="vtab">
         <thead><tr><th scope="col">Statistic</th><th scope="col">Checked against</th></tr></thead>
         <tr><td>All six ICC forms with F based CIs</td><td>psych::ICC</td></tr>
+        <tr><td>Cronbach's alpha</td><td>psych::alpha</td></tr>
         <tr><td>Fleiss kappa</td><td>irr::kappam.fleiss</td></tr>
+        <tr><td>Cohen's kappa for two raters</td><td>irr::kappa2</td></tr>
         <tr><td>Hedges' g with noncentral t CI</td><td>MBESS::ci.smd</td></tr>
         <tr><td>Hedges' g for paired differences, with noncentral t CI</td><td>noncentral t, independently recomputed</td></tr>
         <tr><td>Correlation sample size</td><td>pwr::pwr.r.test</td></tr>
@@ -857,7 +863,7 @@
     <details class="acc"><summary>What the app refuses to do, and where it is stricter than R</summary><div class="acc-body">
       <p>Agreeing with R is only half of being right. The other half is declining to answer when the data
          cannot support the question. Every condition below is detected, explained in words, and covered by
-         its own automated check. R's behaviour on the same data was established by feeding it the same
+         its own automated check. R's behavior on the same data was established by feeding it the same
          defective datasets, and it is recorded because on this class of problem R is often the weaker party,
          not the target.</p>
       <table class="vtab">
@@ -877,7 +883,7 @@
             <td>Declines, naming the study</td>
             <td><b>Silently drops that study</b> from the pooled effect, warning only that a study had missing
                 values, so the answer is to a different question</td></tr>
-        <tr><td>A survival time that is negative, or an event code it does not recognise</td>
+        <tr><td>A survival time that is negative, or an event code it does not recognize</td>
             <td>Declines, naming the column</td>
             <td>Accepts the negative duration; converts the unrecognised code to missing and
                 <b>drops that subject</b> from the curve</td></tr>
@@ -940,7 +946,7 @@
     </div>
 
     <details class="acc"><summary>How much does it cost?</summary><div class="acc-body">
-      <p>It is free. No account, no sign up, and no licence key.</p></div></details>
+      <p>It is free. No account, no sign up, and no license key.</p></div></details>
 
     <details class="acc"><summary>Does my patient data leave my computer?</summary><div class="acc-body">
       <p>No. There is no cloud, no account, and no upload. The statistics engine runs on your own machine, and the app
@@ -992,7 +998,7 @@
       downloadable templates so the column layout is unambiguous, and the importer maps your columns for you.</p></div></details>
 
     <details class="acc"><summary>Which operating systems are supported?</summary><div class="acc-body">
-      <p>Windows 10 and 11 today, as a 247 MB installer or a 308 MB portable build. A macOS version is in
+      <p>Windows 10 and 11 today, as a 251 MB installer or a 313 MB portable build. A macOS version is in
       preparation and will be signed and notarized by Apple so it opens without warnings.</p></div></details>
 
     <details class="acc"><summary>Does it use AI, and does that see my data?</summary><div class="acc-body">
