@@ -67,7 +67,7 @@
     { "@type": "Question", "name": "Can I install it on a locked down hospital computer?",
       "acceptedAnswer": { "@type": "Answer", "text": "Yes. Alongside the installer there is a portable build you extract to any folder you can write to. No installation, no administrator rights, and no registry changes." } },
     { "@type": "Question", "name": "How do I know the numbers are right?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Every test in the analysis menu is checked against R on the same data, and the app matches to the precision it displays. An automated harness re-runs 472 checks, 252 of them comparisons against stored values from R's own packages, and it has to pass before any release. The comparisons are in the repository, so you can run them yourself rather than take our word for it." } }
+      "acceptedAnswer": { "@type": "Answer", "text": "Every test in the analysis menu is checked against R on the same data, and the app matches to the precision it displays. An automated harness re-runs 566 checks, 340 of them comparisons against stored values from R's own packages, and it has to pass before any release. The comparisons are in the repository, so you can run them yourself rather than take our word for it." } }
   ]
 }
 </script>
@@ -578,7 +578,7 @@
   <!-- ================= PILLARS ================= -->
   <section class="sec wrap" style="border-top:0; padding-top:var(--s5)">
     <div class="proof rv">
-      <div><span class="num" data-count="59">59</span><p class="lbl">statistics cross-checked against R</p></div>
+      <div><span class="num" data-count="64">64</span><p class="lbl">statistics cross-checked against R</p></div>
       <div><span class="num" data-count="6">6</span><p class="lbl">workspaces, question to manuscript</p></div>
       <div><span class="num" data-count="18">18</span><p class="lbl">HIPAA identifiers the scanner knows</p></div>
       <div><span class="num" data-count="0">0</span><p class="lbl">bytes of your data ever transmitted</p></div>
@@ -827,9 +827,14 @@
         <tr><td>DerSimonian-Laird pooled estimate and CI</td><td>metafor::rma (DL)</td></tr>
         <tr><td>Hartung-Knapp-Sidik-Jonkman</td><td>metafor::rma (knha)</td></tr>
         <tr><td>Modified Hartung-Knapp-Sidik-Jonkman</td><td>metafor::rma (adhoc)</td></tr>
+        <tr><td>Paule-Mandel estimator, classical and Hartung-Knapp intervals</td><td>metafor::rma (PM)</td></tr>
+        <tr><td>REML estimator, classical and Hartung-Knapp intervals</td><td>metafor::rma (REML)</td></tr>
         <tr><td>Prediction interval (IntHout t, k-2 df)</td><td>metafor::rma, IntHout 2016 t(k-2) recomputed</td></tr>
         <tr><td>Begg and Mazumdar rank correlation</td><td>metafor::ranktest</td></tr>
         <tr><td>Egger regression</td><td>metafor::regtest</td></tr>
+        <tr><td>Rosenthal fail-safe N</td><td>metafor::fsn</td></tr>
+        <tr><td>Leave-one-out sensitivity, each estimator and interval</td><td>metafor::leave1out</td></tr>
+        <tr><td>Cumulative meta-analysis, each estimator and interval</td><td>metafor::cumul</td></tr>
         <tr><td>Diagnostic meta-analysis, pooled Se and Sp</td><td>metafor (PLO, DL)</td></tr>
       </table>
     </div></details>
@@ -972,8 +977,8 @@
 
     <details class="acc"><summary>How do I know the numbers are right?</summary><div class="acc-body">
       <p>Every test in the analysis menu has been checked against R's gold standard packages on the same data, and
-      matches to the precision it displays. The full list is in the section above. An automated harness re-runs 472
-      checks, 252 of them comparisons against stored values from R's own packages, and it has to pass before any
+      matches to the precision it displays. The full list is in the section above. An automated harness re-runs 566
+      checks, 340 of them comparisons against stored values from R's own packages, and it has to pass before any
       release, so a change cannot silently break a result. The comparisons are in the repository, so you can run them
       yourself rather than take our word for it.</p></div></details>
 
@@ -998,7 +1003,7 @@
       downloadable templates so the column layout is unambiguous, and the importer maps your columns for you.</p></div></details>
 
     <details class="acc"><summary>Which operating systems are supported?</summary><div class="acc-body">
-      <p>Windows 10 and 11 today, as a 251 MB installer or a 313 MB portable build. A macOS version is in
+      <p>Windows 10 and 11 today, as a 247 MB installer or a 309 MB portable build. A macOS version is in
       preparation and will be signed and notarized by Apple so it opens without warnings.</p></div></details>
 
     <details class="acc"><summary>Does it use AI, and does that see my data?</summary><div class="acc-body">
