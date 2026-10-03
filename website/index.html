@@ -589,7 +589,7 @@
         <h3>It picks the right test</h3>
         <p>Mark which column is which. The app runs Shapiro-Wilk normality and Levene variance checks, selects the
            correct test, and tells you why in plain English. When your data breaks an assumption it offers the proper
-           alternative, such as Welch, Firth, or McNemar, instead of quietly handing you the wrong number.</p>
+           alternative, such as Welch, Firth, or McNemar, and explains the reason.</p>
       </div>
       <div class="pillar rv">
         <div class="ic">⌂</div>
@@ -611,8 +611,8 @@
     <div class="sechead rv">
       <p class="eyebrow"><span class="step">01</span> Real screens, real numbers</p>
       <h2>See it in use.</h2>
-      <p class="deck">These are not mockups. Every screen below is the app running on real data, captured live, with
-         the result it actually produced.</p>
+      <p class="deck">Every screen below is the app running on real data, captured live, with the result it actually
+         produced.</p>
     </div>
 
     <figure class="shot rv" style="margin-bottom:var(--s5)">
@@ -657,7 +657,8 @@
       <h2>Which test would it choose?</h2>
       <p class="deck">For group comparisons, paired data, and tables, this is the decision the app makes the moment
          you mark your columns. For the other designs, it is the test the app's guide points you to under Change
-         Test. It is the choice most projects get wrong. Tell it what your data looks like and watch it choose.
+         Test. It is one of the most consequential choices in an analysis. Tell it what your data looks like and
+         watch it choose.
          Nothing to download.</p>
     </div>
     <div class="picker rv">
@@ -679,13 +680,12 @@
       </div>
     </div>
     <p class="fine rv" style="margin-top:var(--s3)">
-      This is where the app starts, not where it stops. Every default above was picked by simulation rather than by
-      habit, and the pattern is the same each time: where the textbook choice depends on an assumption that is easy
-      to break, the app takes the one that does not. That is why a Welch test is the default even when the variances
-      agree, and why the non-normal answers are Brunner-Munzel and the ANOVA-type statistic rather than Mann-Whitney
-      and Kruskal-Wallis, which quietly need the groups to share a shape. The familiar tests are all still there when
-      you want them. The app checks the assumptions on your actual data and shows its reasoning, which is the part a
-      flowchart cannot do for you.
+      This is where the app starts, not where it stops. Every default above was chosen by simulation, and the pattern
+      is the same each time: where a common choice depends on an assumption that is easy to break, the app takes the
+      option that does not depend on it. That is why a Welch test is the default even when the variances agree, and
+      why the non-normal answers are Brunner-Munzel and the ANOVA-type statistic, which do not require the groups to
+      share a shape, as Mann-Whitney and Kruskal-Wallis do. The familiar tests are all still there when you want them.
+      The app checks the assumptions on your actual data and shows its reasoning.
     </p>
     <noscript>
       <p class="deck">The picker needs JavaScript to run. The complete list of tests, and the R package each one
@@ -698,8 +698,8 @@
     <div class="sechead rv">
       <p class="eyebrow"><span class="step">03</span> One tool, whole project</p>
       <h2>From question to manuscript.</h2>
-      <p class="deck">Most projects lose weeks moving between a spreadsheet, a stats package, and a drawing tool.
-         This is all four stages in one place.</p>
+      <p class="deck">A project usually moves between a spreadsheet, a statistics package, and a drawing tool. Here,
+         all four stages are in one place.</p>
     </div>
     <div class="g4">
       <div class="flow rv"><span class="n">01</span><h3>Discovery</h3><p>Measure what already exists. Search PubMed for the published footprint and ClinicalTrials.gov for the trials already under way, before you commit a year to it.</p></div>
@@ -714,14 +714,12 @@
     <div class="sechead rv">
       <p class="eyebrow"><span class="step">04</span> Privacy by construction</p>
       <h2>Patient data <b>never leaves the device</b>.</h2>
-      <p class="deck">The one thing a research tool cannot afford to get wrong, settled by how it is built
-         rather than by what it promises.</p>
+      <p class="deck">The one thing a research tool cannot afford to get wrong, settled by how the app is built.</p>
     </div>
     <div class="statement rv">
       <p class="lead">
         There is no cloud, no account, and no upload. The analysis engine runs on your own computer and the
-        app works with no internet connection at all. That is not a policy you have to trust. It is simply
-        how the software is built.
+        app works with no internet connection at all. That follows from how the software is built.
       </p>
       <p>
         A built in Safe Harbor helper can scan a dataset for the eighteen HIPAA identifiers and hand back a
@@ -756,7 +754,7 @@
     <div class="sechead rv">
       <p class="eyebrow"><span class="step">06</span> Open the drawers</p>
       <h2>Validated against R.</h2>
-      <p class="deck">Ease of use is worthless if the numbers are wrong. Every test in the analysis menu has been
+      <p class="deck">Accuracy comes first. Every test in the analysis menu has been
          run against R's gold standard packages on the same data and compared to displayed precision. Here is exactly
          what was checked against what. The reference set is base R's <b>stats</b> together with
          <b>afex</b>, <b>brunnermunzel</b>, <b>car</b>, <b>epiR</b>, <b>FSA</b>, <b>irr</b>, <b>lawstat</b>,
@@ -865,19 +863,18 @@
       </table>
     </div></details>
 
-    <details class="acc"><summary>What the app refuses to do, and where it is stricter than R</summary><div class="acc-body">
+    <details class="acc"><summary>What the app declines to do, and what R does with the same data</summary><div class="acc-body">
       <p>Agreeing with R is only half of being right. The other half is declining to answer when the data
          cannot support the question. Every condition below is detected, explained in words, and covered by
-         its own automated check. R's behavior on the same data was established by feeding it the same
-         defective datasets, and it is recorded because on this class of problem R is often the weaker party,
-         not the target.</p>
+         its own automated check. R's behavior is shown for reference, recorded by running R 4.6.0 on the
+         same datasets.</p>
       <table class="vtab">
         <thead><tr><th scope="col">The data</th><th scope="col">What this app does</th><th scope="col">What R 4.6.0 does</th></tr></thead>
         <tr><td>Every group holds one repeated value, so there is no spread to measure a difference against</td>
             <td>Declines, and names the rank test that still answers</td>
-            <td><b>Reports a result.</b> On twelve identical values <code>aov</code> gives F = 1, p = 0.405, and
-                <code>TukeyHSD</code> gives an adjusted p of 0.047, a significant difference between identical
-                groups, decided by rounding error</td></tr>
+            <td>Reports a result: on twelve identical values <code>aov</code> gives F = 1, p = 0.405, and
+                <code>TukeyHSD</code> gives an adjusted p of 0.047 between the identical groups, which arises
+                from floating-point rounding</td></tr>
         <tr><td>A correlation from two points</td>
             <td>Declines: two points always fall on a line, so the coefficient is 1 whatever the values are</td>
             <td>Declines</td></tr>
@@ -886,12 +883,12 @@
             <td>Reports a pooled effect and a p-value</td></tr>
         <tr><td>A study whose estimate has no confidence interval</td>
             <td>Declines, naming the study</td>
-            <td><b>Silently drops that study</b> from the pooled effect, warning only that a study had missing
-                values, so the answer is to a different question</td></tr>
+            <td>Leaves that study out of the pooled effect, with a warning that a study had missing
+                values</td></tr>
         <tr><td>A survival time that is negative, or an event code it does not recognize</td>
             <td>Declines, naming the column</td>
-            <td>Accepts the negative duration; converts the unrecognised code to missing and
-                <b>drops that subject</b> from the curve</td></tr>
+            <td>Accepts the negative duration; treats the unrecognized code as missing and leaves that
+                subject out of the curve</td></tr>
         <tr><td>A power calculation asking for power of exactly 1</td>
             <td>Declines: it is not attainable with a finite sample</td>
             <td>Returns a required sample size of one billion</td></tr>
@@ -904,7 +901,7 @@
             <td>Switches to Fisher's exact test and says so</td>
             <td>Runs the chi-square and warns that the approximation may be incorrect</td></tr>
       </table>
-      <p>Two comparisons are meaningless unless the exact R call is named, and both are named in the harness:
+      <p>Two comparisons depend on which R call is used, and both calls are named in the harness:
          <code>cor.test</code> for Spearman on tied data underflows to exactly zero unless asked for the
          asymptotic form, and <code>psych::ICC</code> defaults to a mixed model that returns a different
          estimator from the classical one this app implements.</p>
@@ -927,8 +924,8 @@
     <div class="g3">
       <div class="aud rv">
         <h3>Students and residents</h3>
-        <p>Your first project, without a statistician on speed dial. The test is chosen for you, the assumptions are
-           checked for you, and the write-up is ready to paste.</p>
+        <p>Support from your very first project. The test is chosen for you, the assumptions are checked for you,
+           and the write-up is ready to paste.</p>
       </div>
       <div class="aud rv">
         <h3>Departments</h3>
@@ -959,8 +956,7 @@
       server, because there is no server to write to.</p></div></details>
 
     <details class="acc"><summary>Is it HIPAA compliant?</summary><div class="acc-body">
-      <p>That question does not really apply to a tool, and anyone who answers it with a simple yes is overselling.
-      Compliance is a property of your project and your institution, not of software. What the app does is keep the
+      <p>Compliance is a property of your project and your institution, not of software. What the app does is keep the
       data on your device, ship a Safe Harbor helper that scans for the eighteen identifiers and returns a
       de-identified copy, and warn you before any free text you type could be sent out. What it does not do is make
       your study compliant on its own.</p></div></details>
@@ -989,8 +985,9 @@
 
     <details class="acc"><summary>What happens if my data breaks an assumption?</summary><div class="acc-body">
       <p>You are told, and you are offered the correct alternative. If variances are unequal it suggests Welch. If a
-      logistic model is perfectly separated it suggests Firth's penalized regression rather than reporting an absurd
-      odds ratio. If your groups are not normal it moves to the nonparametric equivalent. The reasoning is shown, so
+      logistic model is perfectly separated it suggests Firth's penalized regression, which gives a finite odds ratio
+      where ordinary logistic regression cannot. If your groups are not normal it moves to the nonparametric
+      equivalent. The reasoning is shown, so
       you can learn the rule rather than just take the output.</p></div></details>
 
     <details class="acc"><summary>What can I export?</summary><div class="acc-body">
@@ -1302,16 +1299,16 @@
       corr:   [{ k: 'n', t: 'Linear and roughly normal' }, { k: 'nn', t: 'Monotonic, or not normal' }, { k: 'tied', t: 'Ordinal or heavily tied' }]
     };
     var R = {
-      'two|neq':    { t: "Welch's t-test", w: 'The variances agree, so a Student’s t-test would be valid here too. The app still runs Welch by default: when the variances really are equal Welch costs about one point of power, and when they are not it is the only one of the two that stays honest. Student’s is there as a deliberate choice, for when you need to reproduce a published analysis.', m: "Comes with <b>Hedges' g</b> and a 95% CI. Both are checked against R's <b>t.test</b>." },
-      'two|nuq':    { t: "Welch's t-test", w: 'The variances differ, which is exactly the case a Student’s t-test gets wrong: with the smaller group carrying the larger variance, its false-positive rate reaches about 28% against a nominal 5%, while Welch holds at 5%. Same answer as the equal-variance case above, and that is the point. The default never rests on an assumption this easy to break.', m: "Comes with <b>Hedges' g</b> and a 95% CI. Checked against R's <b>t.test</b>." },
-      'two|nn':     { t: 'Brunner-Munzel', w: 'Normality fails, so the comparison moves off means. Mann-Whitney is the familiar answer here, and it is the wrong default: it assumes the two groups share a shape and a spread, and when they do not, it is no longer testing what you think it is. Brunner-Munzel drops that assumption. It asks the plainer question directly, whether a value drawn from one group tends to be larger than a value drawn from the other, and stays honest when the spreads differ.', m: "Reports P(X &lt; Y) + &frac12;P(X = Y) with a 95% CI. Under 30 per group the p-value comes from the permutation distribution rather than an approximation. Checked against R\'s <b>lawstat::brunner.munzel.test</b> and <b>brunnermunzel</b>. Mann-Whitney is still there as a deliberate choice." },
+      'two|neq':    { t: "Welch's t-test", w: 'The variances agree, so a Student’s t-test would be valid here too. The app still runs Welch by default: when the variances really are equal Welch costs about one point of power, and when they are not it is the one of the two that keeps its false-positive rate. Student’s is there as a deliberate choice, for when you need to reproduce a published analysis.', m: "Comes with <b>Hedges' g</b> and a 95% CI. Both are checked against R's <b>t.test</b>." },
+      'two|nuq':    { t: "Welch's t-test", w: 'The variances differ, which is the case where a Student’s t-test becomes unreliable: with the smaller group carrying the larger variance, its false-positive rate reaches about 28% against a nominal 5%, while Welch holds at 5%. Same answer as the equal-variance case above, and that is the point. The default never rests on an assumption this easy to break.', m: "Comes with <b>Hedges' g</b> and a 95% CI. Checked against R's <b>t.test</b>." },
+      'two|nn':     { t: 'Brunner-Munzel', w: 'Normality fails, so the comparison moves off means. Mann-Whitney is the familiar choice here. It assumes the two groups share a shape and a spread, and when they do not, it answers a different question from the one usually intended. Brunner-Munzel drops that assumption. It asks directly whether a value drawn from one group tends to be larger than a value drawn from the other, and keeps its false-positive rate when the spreads differ.', m: "Reports P(X &lt; Y) + &frac12;P(X = Y) with a 95% CI. Under 30 per group the p-value comes from the permutation distribution rather than an approximation. Checked against R\'s <b>lawstat::brunner.munzel.test</b> and <b>brunnermunzel</b>. Mann-Whitney is still there as a deliberate choice." },
       'many|neq':   { t: "Welch's ANOVA", w: 'Three or more groups, all normal, variances equal. A one-way ANOVA would be valid here, and the app still runs Welch, for exactly the reason it does with two groups: when the variances really are equal Welch gives up almost nothing, and when they are not it is the only one of the two that holds its false-positive rate. The default does not rest on an assumption this easy to break. The omnibus test runs first, and post-hoc comparisons only follow if it is significant.', m: "Post-hoc <b>Games-Howell</b>. Checked against R's <b>oneway.test</b>. One-way ANOVA, with Tukey HSD, <b>&eta;&sup2;</b> and <b>&omega;&sup2;</b>, is still there as a deliberate choice." },
       'many|nuq':   { t: "Welch's ANOVA", w: 'Normal, but the variances are unequal, which breaks a standard ANOVA assumption. Same answer as the equal-variance case above, and that is the point: the app does not wait to detect this before protecting you from it. On unequal variances a classic ANOVA can reject a true null about 31% of the time against a nominal 5%. Levene’s test is still run and reported alongside the result, as an assumption you can see rather than a switch you have to trust.', m: "Post-hoc <b>Games-Howell</b>. Checked against R's <b>oneway.test</b>." },
-      'many|nn':    { t: 'ANOVA-type statistic', w: 'Normality fails across three or more groups. Kruskal-Wallis is the familiar answer, and it carries the same flaw as Mann-Whitney: it leans on the groups sharing a shape, and unequal spreads quietly break it. The ANOVA-type statistic does not. It works on pseudo-ranks, which weight every group equally whatever its size, and refers the result to an F distribution with estimated degrees of freedom. This is the three-group counterpart of the choice made above.', m: "Reports a relative effect per group. Post-hoc pairwise <b>Brunner-Munzel</b>, Holm-adjusted. Checked against R's <b>rankFD::rankFD</b>. Kruskal-Wallis, with Dunn and <b>&epsilon;&sup2;</b>, is still there as a deliberate choice." },
+      'many|nn':    { t: 'ANOVA-type statistic', w: 'Normality fails across three or more groups. Kruskal-Wallis is the familiar choice, and it shares Mann-Whitney’s assumption that the groups have the same shape, so unequal spreads affect it. The ANOVA-type statistic does not need that assumption. It works on pseudo-ranks, which weight every group equally whatever its size, and refers the result to an F distribution with estimated degrees of freedom. This is the three-group counterpart of the choice made above.', m: "Reports a relative effect per group. Post-hoc pairwise <b>Brunner-Munzel</b>, Holm-adjusted. Checked against R's <b>rankFD::rankFD</b>. Kruskal-Wallis, with Dunn and <b>&epsilon;&sup2;</b>, is still there as a deliberate choice." },
       'paired|n':   { t: 'Paired t-test', w: 'The same subjects measured twice, with roughly normal differences. Pairing strips out between-subject noise, so this is far more powerful than treating the groups as independent.', m: "Comes with <b>Hedges' g</b>, the difference-score d<sub>z</sub> corrected for small-sample bias, and a noncentral t interval. Checked against R's <b>t.test (paired)</b>." },
       'paired|nn':  { t: 'Wilcoxon signed-rank', w: 'Paired measurements whose differences are not normal, so the test ranks the differences rather than averaging them.', m: "Reports the <b>pseudomedian</b> of the differences with a distribution-free interval, which is the quantity this test is actually about; it equals the median of the differences only when those differences are symmetric. The p-value is exact and conditional on the observed ties and zeros. Checked against R's <b>wilcox.test (paired)</b>." },
       'cat|big':    { t: 'Chi-square test', w: 'A contingency table with healthy expected counts, so the chi-square approximation holds. Yates’ correction is applied to 2x2 tables.', m: "Comes with <b>Cram&eacute;r's V</b>. Checked against R's <b>chisq.test</b>." },
-      'cat|small':  { t: "Fisher's exact test", w: 'Expected counts under 5 make the chi-square approximation unreliable, so the exact test is used instead. No approximation, no warning to ignore.', m: "With a conditional <b>odds ratio</b> and an exact CI. Checked against R's <b>fisher.test</b>." },
+      'cat|small':  { t: "Fisher's exact test", w: 'Expected counts under 5 make the chi-square approximation unreliable, so the exact test is used instead. No approximation is involved.', m: "With a conditional <b>odds ratio</b> and an exact CI. Checked against R's <b>fisher.test</b>." },
       'cat|pair':   { t: "McNemar's test", w: 'The same subjects before and after. The pairing has to be respected, so only the discordant pairs carry information.', m: "Exact binomial when discordant counts are small. Checked against R's <b>mcnemar.test</b>." },
       'corr|n':     { t: 'Pearson correlation', w: 'Two numeric variables with a roughly linear, normal relationship.', m: "With a 95% CI on <b>r</b>. Checked against R's <b>cor.test</b>." },
       'corr|nn':    { t: 'Spearman correlation', w: 'The relationship is monotonic rather than linear, or normality fails, so the correlation is computed on ranks. At nine or fewer observations with no ties, the p-value comes from enumerating every permutation rather than from a large-sample approximation. That approximation is anti-conservative exactly where pilot studies live: at n = 6 it reports a p roughly three and a half times smaller than the true one.', m: "Reports <b>rho</b>, with an exact permutation p-value at nine or fewer observations. Matches R's <b>cor.test</b> exactly across n = 3 to 9, which is precisely the range R itself enumerates. Neither this application nor R puts an interval on rho." },
