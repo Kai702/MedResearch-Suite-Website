@@ -63,7 +63,7 @@
     { "@type": "Question", "name": "Does my patient data leave my computer?",
       "acceptedAnswer": { "@type": "Answer", "text": "No. There is no cloud, no account, and no upload. The statistics engine runs on your own machine, and the app works with no internet connection." } },
     { "@type": "Question", "name": "Is it HIPAA compliant?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Compliance is a property of your project and your institution, not of software. The app keeps data on your device, ships a Safe Harbor helper that scans for the eighteen identifiers, and warns you before any free text could be sent out. It does not make your study compliant on its own." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "Compliance is a property of your project and your institution, not of software. The app keeps data on your device and scans anything you type for the eighteen Safe Harbor identifiers before it can be sent out. Nothing flagged is sent unless you confirm twice, and searches and AI requests carrying an identifier other than a plain name are refused outright. The scanner checks names against about 186,000 first names and 800,000 surnames in many languages and scripts, and found 98% of identifier columns on a synthetic test. It does not make your study compliant on its own, so review a de-identified copy before you share it." } },
     { "@type": "Question", "name": "Can I install it on a locked down hospital computer?",
       "acceptedAnswer": { "@type": "Answer", "text": "Yes. Alongside the installer there is a portable build you extract to any folder you can write to. No installation, no administrator rights, and no registry changes." } },
     { "@type": "Question", "name": "How do I know the numbers are right?",
@@ -330,6 +330,7 @@
   .acc[open] summary{border-bottom:1px solid var(--line); background:var(--tint)}
   .acc-body{padding:var(--s2) 18px var(--s3); font-size:.88rem; color:var(--muted); line-height:1.75}
   .acc-body p{margin:0}
+  .acc-body p + p{margin-top:var(--s1)}
   .vtab{width:100%; border-collapse:collapse; font-size:.82rem}
   .vtab th{text-align:left; padding:0 0 9px; border-bottom:1px solid var(--line); font-family:'Poppins',sans-serif;
            font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700}
@@ -957,9 +958,19 @@
 
     <details class="acc"><summary>Is it HIPAA compliant?</summary><div class="acc-body">
       <p>Compliance is a property of your project and your institution, not of software. What the app does is keep the
-      data on your device, ship a Safe Harbor helper that scans for the eighteen identifiers and returns a
-      de-identified copy, and warn you before any free text you type could be sent out. What it does not do is make
-      your study compliant on its own.</p></div></details>
+      data on your device, and check anything you type before it can leave.</p>
+      <p>Your dataset is never uploaded. Before a literature search, an AI suggestion or a feedback message is sent,
+      the text is scanned on your computer for the eighteen Safe Harbor identifiers. If one is found, nothing is sent
+      unless you confirm twice. For searches and AI requests the app goes further and refuses the identifier
+      outright, even after you confirm. The one exception is a plain name with no title, since that is often an
+      author you are searching for.</p>
+      <p>The same scanner powers the Safe Harbor helper, which returns a de-identified copy of a dataset. It checks
+      names against about 186,000 first names and 800,000 surnames in many languages and scripts, reads the values in
+      a column even when the header says nothing, and confirms Aadhaar, NHS and card numbers by their check digits.
+      On a synthetic test of 521 identifier columns from 68 name origins, it found 98%, and none of the ordinary
+      clinical columns or research queries in that test was flagged by mistake.</p>
+      <p>What it does not do is make your study compliant on its own. No scanner is perfect, so review a
+      de-identified copy before you share it.</p></div></details>
 
     <details class="acc"><summary>Can I install it on a locked down hospital computer?</summary><div class="acc-body">
       <p>Yes. Alongside the normal installer there is a portable build. You extract it to any folder you can write to,
@@ -1000,7 +1011,7 @@
       downloadable templates so the column layout is unambiguous, and the importer maps your columns for you.</p></div></details>
 
     <details class="acc"><summary>Which operating systems are supported?</summary><div class="acc-body">
-      <p>Windows 10 and 11 today, as a 247 MB installer or a 309 MB portable build. A macOS version is in
+      <p>Windows 10 and 11 today, as a 250 MB installer or a 312 MB portable build. A macOS version is in
       preparation and will be signed and notarized by Apple so it opens without warnings.</p></div></details>
 
     <details class="acc"><summary>Does it use AI, and does that see my data?</summary><div class="acc-body">
