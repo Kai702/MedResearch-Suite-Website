@@ -59,7 +59,7 @@ whether `support@` reaches an inbox that is read cannot be checked from here.
 ## 5. On Every Release
 
 - [ ] Attach all three files to the release that will be the latest: `MedResearch-Suite.exe`, `MedResearch-Suite.zip` and `MedResearch-Suite-arm64.dmg`, under exactly those names
-- [ ] `SHA256SUMS.txt` lists all three. `tools/release_files.py checksums` writes only the two Windows lines, so add the DMG line back whenever the Windows files are rebuilt
+- [ ] `SHA256SUMS.txt` lists all three. `tools/release_files.py checksums <folder> [<existing SHA256SUMS.txt>]` hashes the disk image when it is in the folder and otherwise keeps its line from the release's current file, and `tools/publish_release.sh` passes that file, so rebuilding the Windows files keeps the Mac line. A brand new release has no current file, so its disk image must be in the folder or added by hand
 - [ ] Update the download sizes in the FAQ ("Which operating systems are supported?": the installer, the portable build and the disk image)
 - [ ] Run `tools/validate_stats.py`: it fails if the harness size on the page ("583 checks, 343 of them") or the headline count ("64 statistics") disagrees with the harness or the page's accuracy tables
 - [ ] Put the same `website/index.html` in both repositories, byte for byte (compare `git hash-object`). Merging it in the app repository does not deploy it; pushing the website repository does
