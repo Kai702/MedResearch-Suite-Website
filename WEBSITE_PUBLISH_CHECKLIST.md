@@ -13,13 +13,18 @@ to that repository's `main` is the deploy. This file sits outside `website/`, so
 
 - [x] Installer button: `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.exe`
 - [x] Portable button: `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.zip`
-- [x] Both resolve to the current v2.4.0 files (250 MB and 312 MB)
-- [x] The FAQ states the same sizes: "a 250 MB installer or a 312 MB portable build"
-- [x] The macOS row reads "coming soon" and is not a link
+- [x] macOS button (added 6 October 2026): `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-arm64.dmg`
+- [x] All three resolve to the current v2.4.0 files (250 MB, 312 MB and 262 MB)
+- [x] The FAQ states the same sizes and the Mac requirements: Apple silicon, macOS 14 (Sonoma) or newer
 
-The file names carry no version number, so a new release needs no link change. Publish the release,
-with its files attached, before deploying a site that describes it; until then the buttons serve the
-previous release.
+The file names carry no version number, so a new release needs no link change. But every link asks
+for the file of that name on whichever release is marked **Latest**, so a release only works as the
+latest if all three files are attached to it. Publish the release, with its files attached, before
+deploying a site that describes it; until then the buttons serve the previous release.
+
+On 6 October 2026 a release carrying only the DMG (tag `2.5.0`) was published as the latest, and both
+Windows buttons returned "not found" for about six hours, until v2.4.0 was marked latest again. To
+add a file to an existing version, attach it to that version's release instead of making a new one.
 
 ---
 
@@ -53,7 +58,9 @@ whether `support@` reaches an inbox that is read cannot be checked from here.
 
 ## 5. On Every Release
 
-- [ ] Update the download sizes in the FAQ ("Windows 10 and 11 today, as a ... MB installer or a ... MB portable build")
+- [ ] Attach all three files to the release that will be the latest: `MedResearch-Suite.exe`, `MedResearch-Suite.zip` and `MedResearch-Suite-arm64.dmg`, under exactly those names
+- [ ] `SHA256SUMS.txt` lists all three. `tools/release_files.py checksums` writes only the two Windows lines, so add the DMG line back whenever the Windows files are rebuilt
+- [ ] Update the download sizes in the FAQ ("Which operating systems are supported?": the installer, the portable build and the disk image)
 - [ ] Run `tools/validate_stats.py`: it fails if the harness size on the page ("583 checks, 343 of them") or the headline count ("64 statistics") disagrees with the harness or the page's accuracy tables
 - [ ] Put the same `website/index.html` in both repositories, byte for byte (compare `git hash-object`). Merging it in the app repository does not deploy it; pushing the website repository does
 - [ ] Check the live site with a cache-busting query string (`?cb=...`), since Cloudflare caches pages at its edge
@@ -72,7 +79,7 @@ These are printed on the page and stop being true if the app moves on.
 - [ ] The HIPAA answer's account of typed text: nothing that looks like an identifier is sent without two confirmations, and searches and AI requests refuse one outright, a plain name with no title excepted
 - [ ] **300 DPI** exports in PNG, JPG, TIFF and SVG
 - [ ] The R package attributions in the Accuracy drawers still match `tools/validate_stats.py`
-- [ ] "Windows 10 and 11", the download sizes, and "macOS coming soon"
+- [ ] "Windows 10 and 11", "macOS 14 or newer on Apple silicon", "notarized by Apple", and the three download sizes
 
 ---
 
