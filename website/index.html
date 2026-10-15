@@ -279,6 +279,19 @@
   .shot figcaption{margin-top:var(--s2); font-size:.85rem; line-height:1.6; color:var(--muted)}
   .shot figcaption b{display:block; font-family:'Poppins',sans-serif; font-size:.68rem; letter-spacing:.12em;
     text-transform:uppercase; color:var(--teal-lite); font-weight:700; margin-bottom:6px}
+  .shot figcaption a{color:var(--mint)}
+
+  /* ---------- demo video: a still until play is pressed, then YouTube's player ---------- */
+  .frame.video{aspect-ratio:16/9}
+  .frame.video .vplay, .frame.video iframe{position:absolute; inset:0; width:100%; height:100%; border:0; display:block}
+  .vplay{cursor:pointer}
+  .vplay img{width:100%; height:100%; object-fit:cover}
+  .vbtn{position:absolute; left:50%; top:50%; width:84px; height:84px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; padding-left:6px; font-size:30px; color:var(--mint); background:rgba(13,20,24,.74);
+    border:2px solid var(--mint); box-shadow:0 12px 40px rgba(0,0,0,.5); transform:translate(-50%,-50%);
+    transition:transform .2s var(--ease), background .2s var(--ease), color .2s var(--ease)}
+  .vplay:hover .vbtn, .vplay:focus-visible .vbtn{background:var(--mint); color:#06262c; transform:translate(-50%,-50%) scale(1.06)}
+  .vplay:focus-visible{outline:2px solid var(--mint); outline-offset:-4px}
 
   /* ---------- grids ---------- */
   .g3{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s3)}
@@ -615,6 +628,22 @@
       <p class="deck">Every screen below is the app running on real data, captured live, with the result it actually
          produced.</p>
     </div>
+
+    <figure class="shot rv" style="margin-bottom:var(--s5)">
+      <div class="frame video" id="demoVideo" data-yt="xOUcqMOq19A">
+        <a class="vplay" href="https://www.youtube.com/watch?v=xOUcqMOq19A"
+           aria-label="Play the full demo video, about 13 minutes. The player loads from YouTube.">
+          <img src="assets/video_poster.jpg" width="1280" height="720" loading="lazy" decoding="async" alt="">
+          <span class="vbtn" aria-hidden="true">&#9654;</span>
+        </a>
+      </div>
+      <figcaption>
+        <b>The Full Demo, About 13 Minutes.</b>
+        Every workspace in order, from a literature search to publication-ready figures, with chapters to jump
+        between them. It was recorded on an earlier version, so a few screens have changed since. The player loads
+        from YouTube only when you press play. <a href="https://www.youtube.com/watch?v=xOUcqMOq19A">Watch it on YouTube</a>.
+      </figcaption>
+    </figure>
 
     <figure class="shot rv" style="margin-bottom:var(--s5)">
       <div class="frame">
@@ -1392,6 +1421,26 @@
     build(q1, SHAPES, shape, pickShape);
     build(q2, CONDS[shape], cond, pickCond);
     render(false);
+  })();
+
+  // Demo video: a still image until the visitor presses play, then YouTube's player from youtube-nocookie.com,
+  // so the page loads nothing from YouTube for a visitor who never plays it. Without JavaScript the link opens
+  // the video on YouTube instead.
+  (function () {
+    var box = document.getElementById('demoVideo');
+    var link = box && box.querySelector('.vplay');
+    if (!link) return;
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + box.getAttribute('data-yt') + '?autoplay=1&rel=0';
+      f.title = 'MedResearch Suite: Full Demo';
+      f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      f.setAttribute('allowfullscreen', '');
+      box.replaceChild(f, link);
+      f.focus();
+    });
   })();
 
   // Windows SmartScreen heads-up: intercepts both Windows download links, shows a plain-language

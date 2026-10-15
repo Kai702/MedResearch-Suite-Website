@@ -87,3 +87,4 @@ These are printed on the page and stop being true if the app moves on.
 
 - [x] No analytics. The page loads no third-party script, font or stylesheet, and nothing reports on visitors, which keeps it consistent with "patient data never leaves the device"
 - [x] `apple-touch-icon.png`, `robots.txt`, `sitemap.xml` and a styled 404 page are live
+- [x] The demo video in "See it in use" is a local still image (`assets/video_poster.jpg`) until the visitor presses play; only then does the page load YouTube's player, from youtube-nocookie.com. Without JavaScript the still links to the video on YouTube. The video (`xOUcqMOq19A`, about 13 minutes) was recorded on an earlier version, which its caption says; update the caption if the video is replaced
