@@ -1010,7 +1010,11 @@
     <details class="acc"><summary>Does it work offline?</summary><div class="acc-body">
       <p>Yes, completely, for every analysis. The only features that need the internet are the ones that are about the
       internet: the literature search in Discovery, which queries PubMed and ClinicalTrials.gov, and the optional AI topic
-      suggestions. Your data is not part of either.</p></div></details>
+      suggestions. Your data is not part of either.</p>
+      <p>On a hospital or university network that reaches the internet only through a proxy server, the Windows version
+      sends both through the proxy your computer is set to use. Two setups still stop them: a network that assigns its
+      proxy through an automatic configuration script, and, for the AI suggestions only, a network that inspects
+      encrypted traffic, because those requests carry your own key.</p></div></details>
 
     <details class="acc"><summary>How do I know the numbers are right?</summary><div class="acc-body">
       <p>Every test in the analysis menu has been checked against R's gold standard packages on the same data, and

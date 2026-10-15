@@ -16,6 +16,8 @@ to that repository's `main` is the deploy. This file sits outside `website/`, so
 - [x] macOS button (added 6 October 2026): `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-arm64.dmg`
 - [x] All three resolve to the current v2.4.0 files (250 MB, 312 MB and 262 MB)
 - [x] The FAQ states the same sizes and the Mac requirements: Apple silicon, macOS 14 (Sonoma) or newer
+- [ ] When the macOS file is rebuilt with the network changes of 15 October 2026, widen "the Windows
+      version" in the FAQ's offline answer to cover the Mac, after checking the Mac build behind a proxy
 
 The file names carry no version number, so a new release needs no link change. But every link asks
 for the file of that name on whichever release is marked **Latest**, so a release only works as the
