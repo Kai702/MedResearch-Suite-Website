@@ -13,15 +13,17 @@ to that repository's `main` is the deploy. This file sits outside `website/`, so
 
 - [x] Installer button: `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.exe`
 - [x] Portable button: `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.zip`
-- [x] macOS button (added 6 October 2026): `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-arm64.dmg`
-- [x] All three resolve to the current v2.4.0 files (250 MB, 312 MB and 262 MB)
-- [x] The FAQ states the same sizes and the Mac requirements: Apple silicon, macOS 14 (Sonoma) or newer
+- [x] macOS button (added 6 October 2026; pinned to v2.4.0 on 21 October 2026, the owner's call, until a 2.5.0 Mac build exists): `https://github.com/Kai702/MedResearch-Suite-Website/releases/download/v2.4.0/MedResearch-Suite-arm64.dmg`
+- [x] The Windows buttons resolve to the v2.5.0 files (251 MB and 313 MB), the macOS button to the v2.4.0 disk image (262 MB)
+- [x] The FAQ states the same sizes, the Mac requirements (Apple silicon, macOS 14 (Sonoma) or newer) and that the Mac download is still 2.4.0
+- [ ] When a 2.5.0 Mac build exists: attach it to v2.5.0 on both repositories, point the macOS button back at `releases/latest/download/MedResearch-Suite-arm64.dmg`, and remove the FAQ's 2.4.0 sentence
 - [ ] When the macOS file is rebuilt with the network changes of 15 October 2026, widen "the Windows
       version" in the FAQ's offline answer to cover the Mac, after checking the Mac build behind a proxy
 
-The file names carry no version number, so a new release needs no link change. But every link asks
-for the file of that name on whichever release is marked **Latest**, so a release only works as the
-latest if all three files are attached to it. Publish the release, with its files attached, before
+The file names carry no version number, so a new release needs no link change. But every `latest`
+link asks for the file of that name on whichever release is marked **Latest**, so a release only
+works as the latest if every file a `latest` link asks for is attached to it (while the macOS button
+is pinned to v2.4.0, that is the two Windows files). Publish the release, with its files attached, before
 deploying a site that describes it; until then the buttons serve the previous release.
 
 On 6 October 2026 a release carrying only the DMG (tag `2.5.0`) was published as the latest, and both
@@ -60,7 +62,7 @@ whether `support@` reaches an inbox that is read cannot be checked from here.
 
 ## 5. On Every Release
 
-- [ ] Attach all three files to the release that will be the latest: `MedResearch-Suite.exe`, `MedResearch-Suite.zip` and `MedResearch-Suite-arm64.dmg`, under exactly those names
+- [ ] Attach every file a `latest` link asks for to the release that will be the latest: `MedResearch-Suite.exe`, `MedResearch-Suite.zip` and, once the macOS button is no longer pinned, `MedResearch-Suite-arm64.dmg`, under exactly those names
 - [ ] `SHA256SUMS.txt` lists all three. `tools/release_files.py checksums <folder> [<existing SHA256SUMS.txt>]` hashes the disk image when it is in the folder and otherwise keeps its line from the release's current file, and `tools/publish_release.sh` passes that file, so rebuilding the Windows files keeps the Mac line. A brand new release has no current file, so its disk image must be in the folder or added by hand
 - [ ] Update the download sizes in the FAQ ("Which operating systems are supported?": the installer, the portable build and the disk image)
 - [ ] Run `tools/validate_stats.py`: it fails if the harness size on the page ("583 checks, 343 of them") or the headline count ("64 statistics") disagrees with the harness or the page's accuracy tables
@@ -75,7 +77,7 @@ These are printed on the page and stop being true if the app moves on.
 
 - [ ] **64 statistics** cross-checked against R (`tools/validate_stats.py` enforces the count)
 - [ ] **583 checks, 343 of them against R** (enforced the same way)
-- [ ] **6 workspaces** (Discovery, Sample Size, Analytics, Meta-Analysis, Diagnostics, Visualizations), in the same order as the app's tab bar
+- [ ] **7 workspaces** (Discovery, Sample Size, Analytics, Meta-Analysis, Network Meta-Analysis, Diagnostics, Visualizations), in the same order as the app's tab bar
 - [ ] **18 HIPAA identifiers** scanned by the Safe Harbor helper
 - [ ] The HIPAA answer's identifier figures: about 186,000 first names and 800,000 surnames, 98% of 521 identifier columns from 68 name origins, Aadhaar, NHS and card numbers confirmed by check digits. Re-check if `backend/phi_data/`, `backend/phi_detect.py` or `tools/test_phi_detection.py` changes
 - [ ] The HIPAA answer's account of typed text: nothing that looks like an identifier is sent without two confirmations, and searches and AI requests refuse one outright, a plain name with no title excepted

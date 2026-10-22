@@ -46,6 +46,7 @@
   "featureList": [
     "Automatic statistical test selection with assumption checks",
     "Meta-analysis with forest, funnel, leave one out, and cumulative plots",
+    "Network meta-analysis with league tables, rankings, inconsistency checks, and CINeMA certainty ratings",
     "Diagnostic accuracy with ROC, AUC, and likelihood ratios",
     "Survival analysis with Kaplan-Meier and Cox regression",
     "Power and sample size analysis",
@@ -566,9 +567,9 @@
         <span class="np-name">Windows Portable <span class="arrow">&rarr;</span></span>
         <div class="np-meta">no install, no admin rights, nothing left behind</div>
       </a>
-      <a class="np-row" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-arm64.dmg">
+      <a class="np-row" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/download/v2.4.0/MedResearch-Suite-arm64.dmg">
         <span class="np-name">macOS <span class="arrow">&rarr;</span></span>
-        <div class="np-meta">Apple silicon, macOS 14 or newer</div>
+        <div class="np-meta">Apple silicon, macOS 14 or newer, version 2.4.0</div>
       </a>
     </div>
     <p class="note rise d4">Free. No account, no sign up.</p>
@@ -766,17 +767,18 @@
   <!-- ================= FEATURES ================= -->
   <section class="sec wrap" id="features">
     <div class="sechead rv">
-      <p class="eyebrow"><span class="step">05</span> Six workspaces</p>
+      <p class="eyebrow"><span class="step">05</span> Seven workspaces</p>
       <h2>What it does.</h2>
-      <p class="deck">The same six workspaces you see in the app, in the same order.</p>
+      <p class="deck">The same seven workspaces you see in the app, in the same order.</p>
     </div>
     <div class="g3" style="gap:var(--s2)">
-      <div class="cap rv"><i>01</i><h3>Discovery</h3><p>Measure how much has already been published on your question through PubMed, and how many trials are registered or running through ClinicalTrials.gov, with a study type breakdown.</p></div>
+      <div class="cap rv"><i>01</i><h3>Discovery</h3><p>Measure how much has already been published on your question through PubMed, and how many trials are registered or running through ClinicalTrials.gov, with a study type breakdown and a coverage map of your search terms.</p></div>
       <div class="cap rv"><i>02</i><h3>Sample Size</h3><p>Power analysis for t tests, ANOVA, proportions, and correlations, with unequal allocation and one sided options.</p></div>
       <div class="cap rv"><i>03</i><h3>Analytics</h3><p>Automatic test selection with assumption checks, effect sizes, multivariable models, survival, and reliability.</p></div>
-      <div class="cap rv"><i>04</i><h3>Meta-Analysis</h3><p>Forest, funnel, leave one out, and cumulative plots. Fixed, random, HKSJ and modified HKSJ, prediction intervals, Egger, and Begg.</p></div>
-      <div class="cap rv"><i>05</i><h3>Diagnostics</h3><p>2x2 tables, ROC and AUC, likelihood ratios, predictive values, kappa, and a Bayesian probability revision plot.</p></div>
-      <div class="cap rv"><i>06</i><h3>Visualizations</h3><p>Box, violin, raincloud, Bland-Altman, Q-Q, heatmaps, and PRISMA 2020, CONSORT, and STROBE diagrams.</p></div>
+      <div class="cap rv"><i>04</i><h3>Meta-Analysis</h3><p>Forest, funnel, leave one out, and cumulative plots. Fixed, random, HKSJ and modified HKSJ, prediction intervals, Egger, Begg, and an exact Bayesian analysis.</p></div>
+      <div class="cap rv"><i>05</i><h3>Network Meta-Analysis</h3><p>Three or more treatments compared at once: league table, ranking, direct and indirect evidence, CINeMA certainty, meta-regression, and an exact Bayesian analysis.</p></div>
+      <div class="cap rv"><i>06</i><h3>Diagnostics</h3><p>2x2 tables, ROC and AUC, likelihood ratios, predictive values, kappa, and a Bayesian probability revision plot.</p></div>
+      <div class="cap rv"><i>07</i><h3>Visualizations</h3><p>Box, violin, raincloud, Bland-Altman, Q-Q, heatmaps, and PRISMA 2020, CONSORT, and STROBE diagrams.</p></div>
     </div>
   </section>
 
@@ -791,7 +793,9 @@
          <b>afex</b>, <b>brunnermunzel</b>, <b>car</b>, <b>epiR</b>, <b>FSA</b>, <b>irr</b>, <b>lawstat</b>,
          <b>logistf</b>, <b>MASS</b>, <b>MBESS</b>, <b>metafor</b>, <b>nnet</b>, <b>pROC</b>, <b>psych</b>,
          <b>pwr</b>, <b>rankFD</b>, <b>rstatix</b> and <b>survival</b>. Where no R package implements a statistic,
-         the formula is computed directly in R and named as such, never left unchecked.</p>
+         the formula is computed directly in R and named as such, never left unchecked. Network meta-analysis has a
+         harness of its own, with reference values from <b>netmeta</b>, <b>metafor</b>, <b>bayesmeta</b> and
+         <b>multinma</b>.</p>
     </div>
 
     <details class="acc"><summary>Group comparisons and post-hoc tests</summary><div class="acc-body">
@@ -1045,10 +1049,11 @@
       downloadable templates so the column layout is unambiguous, and the importer maps your columns for you.</p></div></details>
 
     <details class="acc"><summary>Which operating systems are supported?</summary><div class="acc-body">
-      <p>Windows 10 and 11, as a 250 MB installer or a 312 MB portable build, and macOS 14 (Sonoma) or newer on
+      <p>Windows 10 and 11, as a 251 MB installer or a 313 MB portable build, and macOS 14 (Sonoma) or newer on
       Macs with Apple silicon, as a 262 MB disk image. The Mac version is notarized by Apple, so macOS opens it
       after the usual confirmation for an app downloaded from the internet. Macs with Intel processors are not
-      supported.</p></div></details>
+      supported. The Mac download is still version 2.4.0, without network meta-analysis and the other additions of
+      2.5.0; it will be updated once the 2.5.0 Mac build is ready.</p></div></details>
 
     <details class="acc"><summary>Does it use AI, and does that see my data?</summary><div class="acc-body">
       <p>There is one optional AI feature that suggests novel research angles, and it is off unless you add your own
