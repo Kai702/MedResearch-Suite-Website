@@ -13,17 +13,17 @@ to that repository's `main` is the deploy. This file sits outside `website/`, so
 
 - [x] Installer button: `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.exe`
 - [x] Portable button: `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.zip`
-- [x] macOS button (added 6 October 2026; pinned to v2.4.0 on 21 October 2026, the owner's call, until a 2.5.0 Mac build exists): `https://github.com/Kai702/MedResearch-Suite-Website/releases/download/v2.4.0/MedResearch-Suite-arm64.dmg`
-- [x] The Windows buttons resolve to the v2.5.0 files (251 MB and 313 MB), the macOS button to the v2.4.0 disk image (262 MB)
-- [x] The FAQ states the same sizes, the Mac requirements (Apple silicon, macOS 14 (Sonoma) or newer) and that the Mac download is still 2.4.0
-- [ ] When a 2.5.0 Mac build exists: attach it to v2.5.0 on both repositories, point the macOS button back at `releases/latest/download/MedResearch-Suite-arm64.dmg`, and remove the FAQ's 2.4.0 sentence
-- [ ] When the macOS file is rebuilt with the network changes of 15 October 2026, widen "the Windows
-      version" in the FAQ's offline answer to cover the Mac, after checking the Mac build behind a proxy
+- [x] macOS button (added 6 October 2026; pinned to v2.4.0 from 21 to 29 October 2026, until the 2.5.0 Mac build was attached): `https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-arm64.dmg`
+- [x] All three buttons resolve to the v2.5.0 files: 251 MB, 313 MB and the 264 MB disk image
+- [x] The FAQ states the same sizes and the Mac requirements (Apple silicon, macOS 14 (Sonoma) or newer)
+- [x] The 2.5.0 Mac build (signed by Meet Radhanpura, notarized and stapled) was attached to v2.5.0 on both repositories on 29 October 2026, the macOS button pointed back at `latest`, and the FAQ's 2.4.0 sentence removed
+- [ ] The 2.5.0 Mac file is built from a tag that has the network changes of 15 October 2026. Widen "the
+      Windows version" in the FAQ's offline answer to cover the Mac once the Mac build is checked behind a proxy (needs a Mac)
 
 The file names carry no version number, so a new release needs no link change. But every `latest`
 link asks for the file of that name on whichever release is marked **Latest**, so a release only
-works as the latest if every file a `latest` link asks for is attached to it (while the macOS button
-is pinned to v2.4.0, that is the two Windows files). Publish the release, with its files attached, before
+works as the latest if every file a `latest` link asks for is attached to it (the two Windows files
+and the disk image). Publish the release, with its files attached, before
 deploying a site that describes it; until then the buttons serve the previous release.
 
 On 6 October 2026 a release carrying only the DMG (tag `2.5.0`) was published as the latest, and both
