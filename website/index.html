@@ -345,6 +345,19 @@
   .acc-body{padding:var(--s2) 18px var(--s3); font-size:.88rem; color:var(--muted); line-height:1.75}
   .acc-body p{margin:0}
   .acc-body p + p{margin-top:var(--s1)}
+
+  /* How to cite: one card per citation style, each with its own Copy button. */
+  .cite-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:var(--s2); margin-top:var(--s3)}
+  .cite-card{border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); padding:var(--s2) 18px; min-width:0}
+  .cite-wide{grid-column:1/-1}
+  .cite-top{display:flex; align-items:center; justify-content:space-between; gap:var(--s1); margin-bottom:var(--s1)}
+  .cite-style{font-family:'Poppins',sans-serif; font-weight:700; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--teal-lite)}
+  .cite-copy{font:inherit; font-size:.78rem; font-weight:600; color:var(--ink); background:var(--tint); border:1px solid var(--line);
+    border-radius:8px; padding:4px 12px; cursor:pointer}
+  .cite-copy:hover{background:var(--tint-strong)}
+  .cite-copy:focus-visible{outline:2px solid var(--teal-lite); outline-offset:2px}
+  .cite-text{margin:0; font-size:.88rem; color:var(--ink); line-height:1.7; overflow-wrap:anywhere}
+  .cite-code{font-family:ui-monospace,'Cascadia Code',Consolas,monospace; font-size:.8rem; line-height:1.6; white-space:pre; overflow-x:auto; overflow-wrap:normal}
   .vtab{width:100%; border-collapse:collapse; font-size:.82rem}
   .vtab th{text-align:left; padding:0 0 9px; border-bottom:1px solid var(--line); font-family:'Poppins',sans-serif;
            font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700}
@@ -1056,7 +1069,8 @@
 
     <details class="acc"><summary>Does it use AI, and does that see my data?</summary><div class="acc-body">
       <p>There is one optional AI feature that suggests novel research angles, and it is off unless you add your own
-      API key. It only ever receives the search wording you type, never your dataset. Before any text leaves the
+      API key. It receives your search question and the titles, authors and abstract excerpts of the papers the search
+      found, never your dataset. Before any text leaves the
       device, a guard scans it for patient identifiers and blocks it by default until you confirm twice.</p></div></details>
 
     <details class="acc"><summary>Who made it, and can I get it for my department?</summary><div class="acc-body">
@@ -1064,10 +1078,47 @@
       including on machines that block installers, get in touch.</p></div></details>
   </section>
 
+  <!-- ================= HOW TO CITE ================= -->
+  <section class="sec wrap" id="cite">
+    <div class="sechead rv">
+      <p class="eyebrow"><span class="step">09</span> In your manuscript</p>
+      <h2>How to cite it.</h2>
+      <p class="deck">If MedResearch Suite helped your research, name it and its version in your methods and cite it in
+        your journal's style. The version you used is shown in the app under About MedResearch Suite.</p>
+    </div>
+    <div class="cite-grid">
+      <div class="cite-card">
+        <div class="cite-top"><span class="cite-style">AMA</span><button type="button" class="cite-copy" data-cite="cite-ama">Copy</button></div>
+        <p class="cite-text" id="cite-ama">Vaja HS. <i>MedResearch Suite</i>. Version 2.5.0. 2026. Accessed <span data-cite-date="ama">[date accessed]</span>. https://medresearchsuite.com</p>
+      </div>
+      <div class="cite-card">
+        <div class="cite-top"><span class="cite-style">Vancouver</span><button type="button" class="cite-copy" data-cite="cite-vancouver">Copy</button></div>
+        <p class="cite-text" id="cite-vancouver">Vaja HS. MedResearch Suite [computer program]. Version 2.5.0. 2026 [cited <span data-cite-date="vancouver">date</span>]. Available from: https://medresearchsuite.com</p>
+      </div>
+      <div class="cite-card">
+        <div class="cite-top"><span class="cite-style">APA</span><button type="button" class="cite-copy" data-cite="cite-apa">Copy</button></div>
+        <p class="cite-text" id="cite-apa">Vaja, H. S. (2026). <i>MedResearch Suite</i> (Version 2.5.0) [Computer software]. https://medresearchsuite.com</p>
+      </div>
+      <div class="cite-card">
+        <div class="cite-top"><span class="cite-style">BibTeX</span><button type="button" class="cite-copy" data-cite="cite-bibtex">Copy</button></div>
+<pre class="cite-text cite-code" id="cite-bibtex">@software{vaja_medresearch_suite_2026,
+  author  = {Vaja, HariOm S.},
+  title   = {MedResearch Suite},
+  version = {2.5.0},
+  year    = {2026},
+  url     = {https://medresearchsuite.com}
+}</pre>
+      </div>
+    </div>
+    <p class="note">In the methods, for example: "Analyses were performed with MedResearch Suite, version 2.5.0 (HariOm S.
+      Vaja; https://medresearchsuite.com)." Name the method as well, such as a random-effects meta-analysis with the REML
+      estimator, so a reader can repeat it.</p>
+  </section>
+
   <!-- ================= CONTACT ================= -->
   <section class="sec wrap" id="contact">
     <div class="sechead rv">
-      <p class="eyebrow"><span class="step">09</span> Get in touch</p>
+      <p class="eyebrow"><span class="step">10</span> Get in touch</p>
       <h2>Bring it to your department.</h2>
       <p class="deck">Rolling it out across a department or an institution, getting it onto machines that block
         installers, or telling me it got something wrong. All of it reaches the same inbox, and it is read by the
@@ -1492,6 +1543,29 @@
     });
     cancelBtn.addEventListener('click', close);
     backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
+  })();
+
+  // How to cite: today's date in each style's own form, and a Copy button per style (the text is selected instead
+  // where the clipboard is refused).
+  (function () {
+    var d = new Date();
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var forms = {
+      ama: months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(),
+      vancouver: d.getFullYear() + ' ' + months[d.getMonth()].slice(0, 3) + ' ' + d.getDate()
+    };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-cite-date]'), function (el) {
+      el.textContent = forms[el.getAttribute('data-cite-date')] || el.textContent;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.cite-copy'), function (btn) {
+      btn.addEventListener('click', function () {
+        var el = document.getElementById(btn.getAttribute('data-cite'));
+        var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+        var select = function () { var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(el.innerText).then(done, select);
+        else select();
+      });
+    });
   })();
 </script>
 </body>

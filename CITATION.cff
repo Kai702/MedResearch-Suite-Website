@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If MedResearch Suite helped your research, please cite it as below and name the version you used."
+title: "MedResearch Suite"
+type: software
+authors:
+  - family-names: "Vaja"
+    given-names: "HariOm S."
+version: "2.5.0"
+date-released: "2026-10-21"
+url: "https://medresearchsuite.com"
+abstract: "A desktop workbench for clinical research and biostatistics that runs on the user's own computer: literature discovery, sample size, statistical analysis, diagnostic accuracy, pairwise and network meta-analysis, and publication figures."
+keywords:
+  - biostatistics
+  - meta-analysis
+  - network meta-analysis
+  - clinical research
