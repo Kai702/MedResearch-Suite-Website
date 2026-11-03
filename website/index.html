@@ -346,18 +346,25 @@
   .acc-body p{margin:0}
   .acc-body p + p{margin-top:var(--s1)}
 
-  /* How to cite: one card per citation style, each with its own Copy button. */
-  .cite-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:var(--s2); margin-top:var(--s3)}
-  .cite-card{border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); padding:var(--s2) 18px; min-width:0}
-  .cite-wide{grid-column:1/-1}
-  .cite-top{display:flex; align-items:center; justify-content:space-between; gap:var(--s1); margin-bottom:var(--s1)}
-  .cite-style{font-family:'Poppins',sans-serif; font-weight:700; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--teal-lite)}
-  .cite-copy{font:inherit; font-size:.78rem; font-weight:600; color:var(--ink); background:var(--tint); border:1px solid var(--line);
-    border-radius:8px; padding:4px 12px; cursor:pointer}
+  /* Cite: one compact box at the foot of the page, a style menu and a Copy button. */
+  .cite-gen{padding-block:0 var(--s5)}
+  .cite-box{border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); padding:var(--s2) 18px}
+  .cite-row{display:flex; flex-wrap:wrap; gap:var(--s1) var(--s2); align-items:center; justify-content:space-between}
+  .cite-title{margin:0; font-family:'Poppins',sans-serif; font-weight:700; font-size:.78rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--teal-lite)}
+  .cite-controls{display:flex; flex-wrap:wrap; gap:var(--s1); align-items:center; min-width:0}
+  .cite-controls select{font:inherit; font-size:.85rem; color:var(--ink); background:var(--canvas); border:1px solid var(--line);
+    border-radius:8px; padding:6px 10px; max-width:100%}
+  .cite-controls select:focus-visible{outline:2px solid var(--teal-lite); outline-offset:2px}
+  .cite-copy{font:inherit; font-size:.8rem; font-weight:600; color:var(--ink); background:var(--tint); border:1px solid var(--line);
+    border-radius:8px; padding:6px 14px; cursor:pointer}
   .cite-copy:hover{background:var(--tint-strong)}
   .cite-copy:focus-visible{outline:2px solid var(--teal-lite); outline-offset:2px}
-  .cite-text{margin:0; font-size:.88rem; color:var(--ink); line-height:1.7; overflow-wrap:anywhere}
-  .cite-code{font-family:ui-monospace,'Cascadia Code',Consolas,monospace; font-size:.8rem; line-height:1.6; white-space:pre; overflow-x:auto; overflow-wrap:normal}
+  .cite-out{margin-top:var(--s2); font-size:.9rem; color:var(--ink); line-height:1.7; overflow-wrap:anywhere; min-width:0}
+  .cite-out pre{margin:0; font-family:ui-monospace,'Cascadia Code',Consolas,monospace; font-size:.8rem; line-height:1.6;
+    white-space:pre; overflow-x:auto; overflow-wrap:normal}
+  .cite-hint{margin:var(--s1) 0 0; font-size:.76rem; color:var(--muted)}
+  .cite-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
   .vtab{width:100%; border-collapse:collapse; font-size:.82rem}
   .vtab th{text-align:left; padding:0 0 9px; border-bottom:1px solid var(--line); font-family:'Poppins',sans-serif;
            font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700}
@@ -1078,50 +1085,10 @@
       including on machines that block installers, get in touch.</p></div></details>
   </section>
 
-  <!-- ================= HOW TO CITE ================= -->
-  <section class="sec wrap" id="cite">
-    <div class="sechead rv">
-      <p class="eyebrow"><span class="step">09</span> In your manuscript</p>
-      <h2>How to cite it.</h2>
-      <p class="deck">If MedResearch Suite helped your research, name it and its version in your methods and cite it in
-        your journal's style. The version you used is shown in the app under About MedResearch Suite. Each version has its
-        own permanent DOI; 10.5281/zenodo.23915316 always leads to the newest.</p>
-    </div>
-    <div class="cite-grid">
-      <div class="cite-card">
-        <div class="cite-top"><span class="cite-style">AMA</span><button type="button" class="cite-copy" data-cite="cite-ama">Copy</button></div>
-        <p class="cite-text" id="cite-ama">Vaja HS. <i>MedResearch Suite</i>. Version 2.5.0. Zenodo; 2026. doi:10.5281/zenodo.23915317</p>
-      </div>
-      <div class="cite-card">
-        <div class="cite-top"><span class="cite-style">Vancouver</span><button type="button" class="cite-copy" data-cite="cite-vancouver">Copy</button></div>
-        <p class="cite-text" id="cite-vancouver">Vaja HS. MedResearch Suite [computer program]. Version 2.5.0. Zenodo; 2026 [cited <span data-cite-date="vancouver">date</span>]. Available from: https://doi.org/10.5281/zenodo.23915317</p>
-      </div>
-      <div class="cite-card">
-        <div class="cite-top"><span class="cite-style">APA</span><button type="button" class="cite-copy" data-cite="cite-apa">Copy</button></div>
-        <p class="cite-text" id="cite-apa">Vaja, H. S. (2026). <i>MedResearch Suite</i> (Version 2.5.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23915317</p>
-      </div>
-      <div class="cite-card">
-        <div class="cite-top"><span class="cite-style">BibTeX</span><button type="button" class="cite-copy" data-cite="cite-bibtex">Copy</button></div>
-<pre class="cite-text cite-code" id="cite-bibtex">@software{vaja_medresearch_suite_2026,
-  author    = {Vaja, HariOm S.},
-  title     = {MedResearch Suite},
-  version   = {2.5.0},
-  year      = {2026},
-  publisher = {Zenodo},
-  doi       = {10.5281/zenodo.23915317},
-  url       = {https://doi.org/10.5281/zenodo.23915317}
-}</pre>
-      </div>
-    </div>
-    <p class="note">In the methods, for example: "Analyses were performed with MedResearch Suite, version 2.5.0 (HariOm S.
-      Vaja; doi:10.5281/zenodo.23915317)." Name the method as well, such as a random-effects meta-analysis with the REML
-      estimator, so a reader can repeat it.</p>
-  </section>
-
   <!-- ================= CONTACT ================= -->
   <section class="sec wrap" id="contact">
     <div class="sechead rv">
-      <p class="eyebrow"><span class="step">10</span> Get in touch</p>
+      <p class="eyebrow"><span class="step">09</span> Get in touch</p>
       <h2>Bring it to your department.</h2>
       <p class="deck">Rolling it out across a department or an institution, getting it onto machines that block
         installers, or telling me it got something wrong. All of it reaches the same inbox, and it is read by the
@@ -1142,6 +1109,36 @@
       </div>
     </div>
   </section>
+
+  <!-- ================= CITE ================= -->
+  <section class="wrap cite-gen" id="cite" aria-labelledby="citeTitle">
+    <div class="cite-box">
+      <div class="cite-row">
+        <h2 class="cite-title" id="citeTitle">Cite MedResearch Suite</h2>
+        <div class="cite-controls">
+          <label class="cite-sr" for="citeStyle">Citation style</label>
+          <select id="citeStyle">
+            <optgroup label="Citation styles">
+              <option value="ama">AMA</option>
+              <option value="apa">APA 7th</option>
+              <option value="chicago">Chicago 17th (author-date)</option>
+              <option value="harvard">Harvard</option>
+              <option value="ieee">IEEE</option>
+              <option value="mla">MLA 9th</option>
+              <option value="vancouver">Vancouver</option>
+            </optgroup>
+            <optgroup label="Reference manager files">
+              <option value="bibtex">BibTeX</option>
+              <option value="ris">RIS (Zotero, EndNote, Mendeley)</option>
+            </optgroup>
+          </select>
+          <button type="button" class="cite-copy" id="citeCopy">Copy</button>
+        </div>
+      </div>
+      <div class="cite-out" id="citeOut" aria-live="polite">Vaja HS. <i>MedResearch Suite</i>. Version 2.5.0. 2026. doi:10.5281/zenodo.23915317</div>
+      <p class="cite-hint">Version 2.5.0, doi:10.5281/zenodo.23915317. The version you used is shown in the app under About MedResearch Suite.</p>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -1149,6 +1146,7 @@
     <p class="curious"><span class="shine">Stay Curious!</span></p>
     <p class="foot-meta">
       MedResearch Suite, by HariOm S. Vaja<br>
+      <a href="#cite">How to cite</a><br>
       <a href="mailto:support@medresearchsuite.com">support@<wbr>medresearchsuite.com</a>
     </p>
   </div>
@@ -1548,26 +1546,52 @@
     backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
   })();
 
-  // How to cite: today's date in each style's own form, and a Copy button per style (the text is selected instead
-  // where the clipboard is refused).
+  // Cite: the chosen style's citation, today's date where a style asks for it, and Copy. Copy carries the italics
+  // into a word processor (HTML) as well as plain text; where the clipboard is refused the text is selected instead.
   (function () {
+    var sel = document.getElementById('citeStyle'), out = document.getElementById('citeOut'), btn = document.getElementById('citeCopy');
+    if (!sel || !out || !btn) return;
     var d = new Date();
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var forms = {
-      ama: months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(),
-      vancouver: d.getFullYear() + ' ' + months[d.getMonth()].slice(0, 3) + ' ' + d.getDate()
+    var doi = '10.5281/zenodo.23915317', doiUrl = 'https://doi.org/' + doi;
+    var t = '<i>MedResearch Suite</i>';
+    var styles = {
+      ama: 'Vaja HS. ' + t + '. Version 2.5.0. 2026. doi:' + doi,
+      apa: 'Vaja, H. S. (2026). ' + t + ' (Version 2.5.0) [Computer software]. ' + doiUrl,
+      chicago: 'Vaja, HariOm S. 2026. ' + t + '. Version 2.5.0. ' + doiUrl + '.',
+      harvard: 'Vaja, H.S. (2026) ' + t + ' (Version 2.5.0) [Computer program]. Available at: ' + doiUrl +
+        ' (Accessed: ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ').',
+      ieee: 'H. S. Vaja, ' + t + ', Version 2.5.0. (2026). [Online]. Available: ' + doiUrl,
+      mla: 'Vaja, HariOm S. ' + t + '. Version 2.5.0, 2026, ' + doiUrl + '.',
+      vancouver: 'Vaja HS. MedResearch Suite [computer program]. Version 2.5.0. 2026 [cited ' + d.getFullYear() + ' ' +
+        months[d.getMonth()].slice(0, 3) + ' ' + d.getDate() + ']. Available from: https://medresearchsuite.com doi:' + doi,
+      bibtex: '@software{vaja_medresearch_suite_2026,\n  author  = {Vaja, HariOm S.},\n  title   = {MedResearch Suite},\n' +
+        '  version = {2.5.0},\n  year    = {2026},\n  doi     = {' + doi + '},\n  url     = {https://medresearchsuite.com}\n}',
+      ris: 'TY  - COMP\nAU  - Vaja, HariOm S.\nTI  - MedResearch Suite\nET  - 2.5.0\nPY  - 2026\nDO  - ' + doi +
+        '\nUR  - https://medresearchsuite.com\nER  - '
     };
-    Array.prototype.forEach.call(document.querySelectorAll('[data-cite-date]'), function (el) {
-      el.textContent = forms[el.getAttribute('data-cite-date')] || el.textContent;
-    });
-    Array.prototype.forEach.call(document.querySelectorAll('.cite-copy'), function (btn) {
-      btn.addEventListener('click', function () {
-        var el = document.getElementById(btn.getAttribute('data-cite'));
-        var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
-        var select = function () { var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); };
-        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(el.innerText).then(done, select);
-        else select();
-      });
+    var plain = { bibtex: true, ris: true };
+    function show() {
+      var k = styles[sel.value] ? sel.value : 'ama';
+      if (plain[k]) { out.innerHTML = ''; var pre = document.createElement('pre'); pre.textContent = styles[k]; out.appendChild(pre); }
+      else out.innerHTML = styles[k];
+      try { localStorage.setItem('mrsCiteStyle', k); } catch (e) {}
+    }
+    try { var saved = localStorage.getItem('mrsCiteStyle'); if (saved && styles[saved]) sel.value = saved; } catch (e) {}
+    sel.addEventListener('change', show);
+    show();
+    btn.addEventListener('click', function () {
+      var text = out.innerText, html = out.innerHTML;
+      var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+      var select = function () { var r = document.createRange(); r.selectNodeContents(out); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); };
+      var asText = function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, select); else select();
+      };
+      if (!plain[sel.value] && window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+        navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([text], { type: 'text/plain' })
+        })]).then(done, asText);
+      } else asText();
     });
   })();
 </script>
