@@ -6,7 +6,12 @@ authors:
   - family-names: "Vaja"
     given-names: "HariOm S."
 version: "2.5.0"
+doi: "10.5281/zenodo.23915317"
 date-released: "2026-10-21"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23915316"
+    description: "Every version of MedResearch Suite; resolves to the newest."
 url: "https://medresearchsuite.com"
 abstract: "A desktop workbench for clinical research and biostatistics that runs on the user's own computer: literature discovery, sample size, statistical analysis, diagnostic accuracy, pairwise and network meta-analysis, and publication figures."
 keywords:
