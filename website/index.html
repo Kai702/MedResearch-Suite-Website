@@ -1583,7 +1583,14 @@
     btn.addEventListener('click', function () {
       var text = out.innerText, html = out.innerHTML;
       var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
-      var select = function () { var r = document.createRange(); r.selectNodeContents(out); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); };
+      // Where the clipboard API is refused (some embedded browsers), the older copy command still works on a selection;
+      // failing both, the text stays selected and the button says which keys copy it.
+      var select = function () {
+        var r = document.createRange(); r.selectNodeContents(out); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        try { if (document.execCommand('copy')) { done(); return; } } catch (e) {}
+        btn.textContent = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent) ? 'Press ⌘C' : 'Press Ctrl+C';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 2600);
+      };
       var asText = function () {
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, select); else select();
       };
