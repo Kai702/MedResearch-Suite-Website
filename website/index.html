@@ -66,7 +66,9 @@
     { "@type": "Question", "name": "Is it HIPAA compliant?",
       "acceptedAnswer": { "@type": "Answer", "text": "Compliance is a property of your project and your institution, not of software. The app keeps data on your device and scans anything you type for the eighteen Safe Harbor identifiers before it can be sent out. Nothing flagged is sent unless you confirm twice, and searches and AI requests carrying an identifier other than a plain name are refused outright. The scanner checks names against about 186,000 first names and 800,000 surnames in many languages and scripts, and found 98% of identifier columns on a synthetic test. It does not make your study compliant on its own, so review a de-identified copy before you share it." } },
     { "@type": "Question", "name": "Can I install it on a locked down hospital computer?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Alongside the installer there is a portable build you extract to any folder you can write to. No installation, no administrator rights, and no registry changes." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "Often, yes. Alongside the installer there is a portable build you extract to any folder you can write to: no installation, no administrator rights, and no registry changes. Some hospital computers run only programs their IT department has approved; the Windows programs are not code signed yet, so on those computers IT has to allow them first." } },
+    { "@type": "Question", "name": "What does my hospital's IT department need to allow?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Usually nothing: the Windows version reaches the internet the way the computer's web browser does, through the same proxy settings, including automatic configuration scripts and the Windows sign-in. Where a network blocks it, IT needs to allow outbound HTTPS on port 443 to eutils.ncbi.nlm.nih.gov, www.ncbi.nlm.nih.gov, icite.od.nih.gov and clinicaltrials.gov, and, for the optional AI suggestions, to the provider the user chooses (api.anthropic.com, api.openai.com or generativelanguage.googleapis.com). Feedback goes to api.web3forms.com. The dataset never leaves the computer." } },
     { "@type": "Question", "name": "How do I know the numbers are right?",
       "acceptedAnswer": { "@type": "Answer", "text": "Every test in the analysis menu is checked against R on the same data, and the app matches to the precision it displays. An automated harness re-runs 753 checks, 457 of them comparisons against stored values from R's own packages, and it has to pass before any release." } }
   ]
@@ -343,7 +345,7 @@
   .acc summary:hover{background:var(--tint)}
   .acc[open] summary{border-bottom:1px solid var(--line); background:var(--tint)}
   .acc-body{padding:var(--s2) 18px var(--s3); font-size:.88rem; color:var(--muted); line-height:1.75}
-  .acc-body p{margin:0}
+  .acc-body p{margin:0;overflow-wrap:break-word}
   .acc-body p + p{margin-top:var(--s1)}
 
   /* Cite: one compact box at the foot of the page, a style menu and a Copy button. */
@@ -1027,18 +1029,49 @@
       de-identified copy before you share it.</p></div></details>
 
     <details class="acc"><summary>Can I install it on a locked down hospital computer?</summary><div class="acc-body">
-      <p>Yes. Alongside the normal installer there is a portable build. You extract it to any folder you can write to,
-      such as your desktop or a USB stick, and run it. No installation, no administrator rights, no registry changes,
-      and nothing left behind afterwards.</p></div></details>
+      <p>Often, yes. Alongside the normal installer there is a portable build. You extract it to any folder you can
+      write to, such as your desktop or a USB stick, and run it: no installation, no administrator rights and no
+      registry changes. It keeps its settings in your Windows profile, in the folder AppData\Roaming\medresearch-suite,
+      which you can delete afterwards.</p>
+      <p>Some hospital computers run only programs their IT department has approved. The Windows programs are not code
+      signed yet, so on those computers IT has to allow them first. The next answer says what to give them.</p></div></details>
+
+    <details class="acc" id="hospital-it"><summary>What does my hospital's IT department need to allow?</summary><div class="acc-body">
+      <p>Usually nothing. The Windows version reaches the internet the way the computer's web browser does, so where
+      Chrome or Edge can open PubMed, the app can search it. Where a network still blocks it, this is what to give IT.
+      It describes the Windows version.</p>
+      <p><strong>Addresses.</strong> Outbound HTTPS on port 443 only. The literature search uses eutils.ncbi.nlm.nih.gov
+      and www.ncbi.nlm.nih.gov (PubMed and LitSense, at the National Library of Medicine), icite.od.nih.gov (NIH
+      citation counts) and clinicaltrials.gov. The optional AI suggestions use only the provider whose key the user
+      adds: api.anthropic.com, api.openai.com or generativelanguage.googleapis.com. Feedback, when the user sends it,
+      goes to api.web3forms.com. The downloads come from github.com and release-assets.githubusercontent.com.</p>
+      <p><strong>Proxies.</strong> The app follows the computer's proxy settings with the same network engine as Chrome
+      and Edge, and identifies itself as Chrome does. That covers automatic configuration scripts (PAC and WPAD),
+      proxies that sign in with the Windows account (Negotiate or NTLM), which it does without asking, and proxies that
+      want a user name and password, which it asks the user to type. On a network that inspects encrypted traffic, the
+      literature search works either way. The AI suggestions need the network's inspection certificate in the Windows
+      certificate store, as a browser does, because they carry the user's own key and are never sent over a connection
+      the computer cannot verify.</p>
+      <p><strong>On the computer.</strong> Two programs, MedResearch Suite.exe and its statistics engine, backend.exe.
+      They talk to each other only on 127.0.0.1, on port 8000 (or a free port chosen at launch when 8000 is taken) and
+      on one more port chosen at launch, and accept no connections from the network. The installer puts them in
+      AppData\Local\Programs\medresearch-suite for the current user, or under Program Files when installed for all
+      users; the portable build runs from any folder. They are not code signed yet, so where programs must be approved
+      (AppLocker or Windows Defender Application Control), allow them by folder or by file hash.</p>
+      <p><strong>What leaves the computer.</strong> Only the words of a search (and, for citation counts, PubMed record
+      numbers), an AI request (the question and the titles, authors and abstract excerpts of the papers found) and
+      feedback the user writes, each checked on the computer for patient identifiers first. Never the dataset. There is
+      no account, and the app reports nothing about how it is used.</p></div></details>
 
     <details class="acc"><summary>Does it work offline?</summary><div class="acc-body">
       <p>Yes, completely, for every analysis. The only features that need the internet are the ones that are about the
       internet: the literature search in Discovery, which queries PubMed and ClinicalTrials.gov, and the optional AI topic
       suggestions. Your data is not part of either.</p>
-      <p>On a hospital or university network that reaches the internet only through a proxy server, the Windows version
-      sends both through the proxy your computer is set to use. Two setups still stop them: a network that assigns its
-      proxy through an automatic configuration script, and, for the AI suggestions only, a network that inspects
-      encrypted traffic, because those requests carry your own key.</p></div></details>
+      <p>On a hospital or university network, the Windows version reaches these services the way the computer's web
+      browser does, through the same proxy settings, including automatic configuration scripts and the Windows sign-in.
+      On a network that inspects encrypted traffic, the literature search still works, but the AI suggestions are sent
+      only if the computer trusts the network's inspection certificate, because those requests carry your own key. The
+      answer above on hospital IT lists what a network has to allow.</p></div></details>
 
     <details class="acc"><summary>How do I know the numbers are right?</summary><div class="acc-body">
       <p>Every test in the analysis menu has been checked against R's gold standard packages on the same data, and

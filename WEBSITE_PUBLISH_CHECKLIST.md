@@ -84,6 +84,10 @@ These are printed on the page and stop being true if the app moves on.
 - [ ] **300 DPI** exports in PNG, JPG, TIFF and SVG
 - [ ] The R package attributions in the Accuracy drawers still match `tools/validate_stats.py`
 - [ ] "Windows 10 and 11", "macOS 14 or newer on Apple silicon", "notarized by Apple", and the three download sizes
+- [ ] The hospital IT answer (`#hospital-it`, added 5 November 2026): every address the app contacts (`main.js`
+      `LITERATURE_HOSTS` and `AI_HOSTS`, the Feedback service, GitHub's download host), port 443 only, the local ports
+      (`chooseBackendPort`, the relay), the program names and install folder, and "not code signed yet". Re-check it when
+      any of these change, and when the Mac version gains the relay (the answer describes Windows only)
 
 ---
 
