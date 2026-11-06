@@ -1,11 +1,11 @@
 {
   "title": "MedResearch Suite",
   "upload_type": "software",
-  "version": "2.5.0",
+  "version": "built 5 November 2026",
   "creators": [
     { "name": "Vaja, HariOm S." }
   ],
-  "description": "MedResearch Suite is a desktop workbench for clinical research and biostatistics that runs on the user's own computer: literature discovery, sample size, statistical analysis, diagnostic accuracy, pairwise and network meta-analysis, and publication figures, with its statistics checked against R. This record archives the project's public website repository at version 2.5.0 so the software can be cited. The Windows and macOS downloads are at https://medresearchsuite.com.",
+  "description": "MedResearch Suite is a desktop workbench for clinical research and biostatistics that runs on the user's own computer: literature discovery, sample size, statistical analysis, diagnostic accuracy, pairwise and network meta-analysis, and publication figures, with its statistics checked against R. This record archives the project's public website repository as built on 5 November 2026 so the software can be cited. The Windows and macOS downloads are at https://medresearchsuite.com.",
   "access_right": "open",
   "license": "other-closed",
   "keywords": ["biostatistics", "meta-analysis", "network meta-analysis", "clinical research"]

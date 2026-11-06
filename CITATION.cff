@@ -1,13 +1,13 @@
 cff-version: 1.2.0
-message: "If MedResearch Suite helped your research, please cite it as below and name the version you used."
+message: "If MedResearch Suite helped your research, please cite it as below and name the build date your copy shows under About MedResearch Suite."
 title: "MedResearch Suite"
 type: software
 authors:
   - family-names: "Vaja"
     given-names: "HariOm S."
-version: "2.5.0"
+version: "built 5 November 2026"
 doi: "10.5281/zenodo.23915317"
-date-released: "2026-10-21"
+date-released: "2026-11-06"
 identifiers:
   - type: doi
     value: "10.5281/zenodo.23915316"

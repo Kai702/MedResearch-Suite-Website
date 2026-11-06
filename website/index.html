@@ -62,13 +62,13 @@
     { "@type": "Question", "name": "How much does it cost?",
       "acceptedAnswer": { "@type": "Answer", "text": "It is free. No account, no sign up, and no license key." } },
     { "@type": "Question", "name": "Does my patient data leave my computer?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. There is no cloud, no account, and no upload. The statistics engine runs on your own machine, and the app works with no internet connection." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "No. There is no cloud, no account, and no upload. The statistics engine runs on your own machine, and the app works with no internet connection. Once a day it asks GitHub whether a newer version exists, sending nothing about you or your data; Preferences turns this off." } },
     { "@type": "Question", "name": "Is it HIPAA compliant?",
       "acceptedAnswer": { "@type": "Answer", "text": "Compliance is a property of your project and your institution, not of software. The app keeps data on your device and scans anything you type for the eighteen Safe Harbor identifiers before it can be sent out. Nothing flagged is sent unless you confirm twice, and searches and AI requests carrying an identifier other than a plain name are refused outright. The scanner checks names against about 186,000 first names and 800,000 surnames in many languages and scripts, and found 98% of identifier columns on a synthetic test. It does not make your study compliant on its own, so review a de-identified copy before you share it." } },
     { "@type": "Question", "name": "Can I install it on a locked down hospital computer?",
       "acceptedAnswer": { "@type": "Answer", "text": "Often, yes. Alongside the installer there is a portable build you extract to any folder you can write to: no installation, no administrator rights, and no registry changes. Some hospital computers run only programs their IT department has approved; the Windows programs are not code signed yet, so on those computers IT has to allow them first." } },
     { "@type": "Question", "name": "What does my hospital's IT department need to allow?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Usually nothing: the Windows version reaches the internet the way the computer's web browser does, through the same proxy settings, including automatic configuration scripts and the Windows sign-in. Where a network blocks it, IT needs to allow outbound HTTPS on port 443 to eutils.ncbi.nlm.nih.gov, www.ncbi.nlm.nih.gov, icite.od.nih.gov and clinicaltrials.gov, and, for the optional AI suggestions, to the provider the user chooses (api.anthropic.com, api.openai.com or generativelanguage.googleapis.com). Feedback goes to api.web3forms.com. The dataset never leaves the computer." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "Usually nothing: the Windows version reaches the internet the way the computer's web browser does, through the same proxy settings, including automatic configuration scripts and the Windows sign-in. Where a network blocks it, IT needs to allow outbound HTTPS on port 443 to eutils.ncbi.nlm.nih.gov, www.ncbi.nlm.nih.gov, icite.od.nih.gov and clinicaltrials.gov, and, for the optional AI suggestions, to the provider the user chooses (api.anthropic.com, api.openai.com or generativelanguage.googleapis.com). Feedback goes to api.web3forms.com. The daily update check goes to github.com, and an update the user chooses to install downloads from release-assets.githubusercontent.com. The dataset never leaves the computer." } },
     { "@type": "Question", "name": "How do I know the numbers are right?",
       "acceptedAnswer": { "@type": "Answer", "text": "Every test in the analysis menu is checked against R on the same data, and the app matches to the precision it displays. An automated harness re-runs 753 checks, 457 of them comparisons against stored values from R's own packages, and it has to pass before any release." } }
   ]
@@ -594,7 +594,7 @@
         <div class="np-meta">Apple silicon, macOS 14 or newer</div>
       </a>
     </div>
-    <p class="note rise d4">Free. No account, no sign up.</p>
+    <p class="note rise d4">Free. No account, no sign up. Once installed, it keeps itself up to date; a copy installed before November 2026 needs this download once.</p>
 
     <figure class="shot rise d5" style="margin:var(--s6) 0 0">
       <div class="frame">
@@ -1010,7 +1010,9 @@
     <details class="acc"><summary>Does my patient data leave my computer?</summary><div class="acc-body">
       <p>No. There is no cloud, no account, and no upload. The statistics engine runs on your own machine, and the app
       works with no internet connection. Your dataset is held in memory while you work and is never written to a
-      server, because there is no server to write to.</p></div></details>
+      server, because there is no server to write to.</p>
+      <p>Once a day the app asks GitHub whether a newer version exists. It sends nothing about you or your data, it
+      downloads an update only when you click Update, and you can turn the check off in Preferences.</p></div></details>
 
     <details class="acc"><summary>Is it HIPAA compliant?</summary><div class="acc-body">
       <p>Compliance is a property of your project and your institution, not of software. What the app does is keep the
@@ -1044,7 +1046,9 @@
       and www.ncbi.nlm.nih.gov (PubMed and LitSense, at the National Library of Medicine), icite.od.nih.gov (NIH
       citation counts) and clinicaltrials.gov. The optional AI suggestions use only the provider whose key the user
       adds: api.anthropic.com, api.openai.com or generativelanguage.googleapis.com. Feedback, when the user sends it,
-      goes to api.web3forms.com. The downloads come from github.com and release-assets.githubusercontent.com.</p>
+      goes to api.web3forms.com. Once a day the app checks github.com for a newer build (Preferences turns this off),
+      and an update the user chooses to install downloads from release-assets.githubusercontent.com, where the
+      website's downloads come from too.</p>
       <p><strong>Proxies.</strong> The app follows the computer's proxy settings with the same network engine as Chrome
       and Edge, and identifies itself as Chrome does. That covers automatic configuration scripts (PAC and WPAD),
       proxies that sign in with the Windows account (Negotiate or NTLM), which it does without asking, and proxies that
@@ -1071,7 +1075,8 @@
       browser does, through the same proxy settings, including automatic configuration scripts and the Windows sign-in.
       On a network that inspects encrypted traffic, the literature search still works, but the AI suggestions are sent
       only if the computer trusts the network's inspection certificate, because those requests carry your own key. The
-      answer above on hospital IT lists what a network has to allow.</p></div></details>
+      answer above on hospital IT lists what a network has to allow.</p>
+      <p>The daily check for a newer version says nothing when the computer is offline, and tries again later.</p></div></details>
 
     <details class="acc"><summary>How do I know the numbers are right?</summary><div class="acc-body">
       <p>Every test in the analysis menu has been checked against R's gold standard packages on the same data, and
@@ -1167,8 +1172,8 @@
           <button type="button" class="cite-copy" id="citeCopy">Copy</button>
         </div>
       </div>
-      <div class="cite-out" id="citeOut" aria-live="polite">Vaja HS. <i>MedResearch Suite</i>. Version 2.5.0. 2026. doi:10.5281/zenodo.23915317</div>
-      <p class="cite-hint">Version 2.5.0, doi:10.5281/zenodo.23915317. The version you used is shown in the app under About MedResearch Suite.</p>
+      <div class="cite-out" id="citeOut" aria-live="polite">Vaja HS. <i>MedResearch Suite</i>. Built 5 November 2026. 2026. doi:10.5281/zenodo.23915317</div>
+      <p class="cite-hint">MedResearch Suite has no version numbers: each build is named by the date it was built. Cite the date your copy shows under About MedResearch Suite, or at the end of any write-up it copies; the newest build is shown here. doi:10.5281/zenodo.23915317.</p>
     </div>
   </section>
 </main>
@@ -1586,20 +1591,22 @@
     var d = new Date();
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var doi = '10.5281/zenodo.23915317', doiUrl = 'https://doi.org/' + doi;
+    // No version numbers (owner, 2026-11-05): a build is cited by its build date, as About shows it. The newest build's.
+    var built = '5 November 2026';
     var t = '<i>MedResearch Suite</i>';
     var styles = {
-      ama: 'Vaja HS. ' + t + '. Version 2.5.0. 2026. doi:' + doi,
-      apa: 'Vaja, H. S. (2026). ' + t + ' (Version 2.5.0) [Computer software]. ' + doiUrl,
-      chicago: 'Vaja, HariOm S. 2026. ' + t + '. Version 2.5.0. ' + doiUrl + '.',
-      harvard: 'Vaja, H.S. (2026) ' + t + ' (Version 2.5.0) [Computer program]. Available at: ' + doiUrl +
+      ama: 'Vaja HS. ' + t + '. Built ' + built + '. 2026. doi:' + doi,
+      apa: 'Vaja, H. S. (2026). ' + t + ' (build of ' + built + ') [Computer software]. ' + doiUrl,
+      chicago: 'Vaja, HariOm S. 2026. ' + t + '. Built ' + built + '. ' + doiUrl + '.',
+      harvard: 'Vaja, H.S. (2026) ' + t + ' (build of ' + built + ') [Computer program]. Available at: ' + doiUrl +
         ' (Accessed: ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ').',
-      ieee: 'H. S. Vaja, ' + t + ', Version 2.5.0. (2026). [Online]. Available: ' + doiUrl,
-      mla: 'Vaja, HariOm S. ' + t + '. Version 2.5.0, 2026, ' + doiUrl + '.',
-      vancouver: 'Vaja HS. MedResearch Suite [computer program]. Version 2.5.0. 2026 [cited ' + d.getFullYear() + ' ' +
+      ieee: 'H. S. Vaja, ' + t + ', built ' + built + '. (2026). [Online]. Available: ' + doiUrl,
+      mla: 'Vaja, HariOm S. ' + t + '. Built ' + built + ', 2026, ' + doiUrl + '.',
+      vancouver: 'Vaja HS. MedResearch Suite [computer program]. Built ' + built + '. 2026 [cited ' + d.getFullYear() + ' ' +
         months[d.getMonth()].slice(0, 3) + ' ' + d.getDate() + ']. Available from: https://medresearchsuite.com doi:' + doi,
       bibtex: '@software{vaja_medresearch_suite_2026,\n  author  = {Vaja, HariOm S.},\n  title   = {MedResearch Suite},\n' +
-        '  version = {2.5.0},\n  year    = {2026},\n  doi     = {' + doi + '},\n  url     = {https://medresearchsuite.com}\n}',
-      ris: 'TY  - COMP\nAU  - Vaja, HariOm S.\nTI  - MedResearch Suite\nET  - 2.5.0\nPY  - 2026\nDO  - ' + doi +
+        '  version = {built ' + built + '},\n  year    = {2026},\n  doi     = {' + doi + '},\n  url     = {https://medresearchsuite.com}\n}',
+      ris: 'TY  - COMP\nAU  - Vaja, HariOm S.\nTI  - MedResearch Suite\nET  - built ' + built + '\nPY  - 2026\nDO  - ' + doi +
         '\nUR  - https://medresearchsuite.com\nER  - '
     };
     var plain = { bibtex: true, ris: true };

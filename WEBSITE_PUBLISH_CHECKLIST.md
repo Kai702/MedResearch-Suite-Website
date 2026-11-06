@@ -68,6 +68,33 @@ whether `support@` reaches an inbox that is read cannot be checked from here.
 - [ ] Run `tools/validate_stats.py`: it fails if the harness size on the page ("583 checks, 343 of them") or the headline count ("64 statistics") disagrees with the harness or the page's accuracy tables
 - [ ] Put the same `website/index.html` in both repositories, byte for byte (compare `git hash-object`). Merging it in the app repository does not deploy it; pushing the website repository does
 - [ ] Check the live site with a cache-busting query string (`?cb=...`), since Cloudflare caches pages at its edge
+- [ ] **The signed update file** (from the first build that carries the updater): on the owner's PC, run
+      `tools/sign_update.py sign <folder> --notes <notes.txt>` on the folder CI handed over (add `--existing` with the
+      release's current `update.json` once it has one), then `tools/publish_release.sh` for both repositories. It
+      refuses without a valid signed file once the release carries one, and puts `update.json.sig` and then
+      `update.json` up last. Write the notes (What's New) in plain sentences; they are shown as text, at most 4,000
+      characters.
+- [ ] Before publishing, run `node tools/demo_hospital_networks.js --exe "<the built MedResearch Suite.exe>"` on the
+      built app, as for every release
+
+## 5a. The Day the First Build With the Updater Is Published (Once)
+
+Copies installed before it have no updater, so this build is the last manual download for everyone. These changes go
+out together with it, never before, so the site never describes a build that is not out yet:
+
+- [x] The download section and the release notes say that this build updates itself, and that copies installed before
+      it must be installed by hand once
+- [x] "Does my patient data leave my computer?" and "Does it work offline?" mention the daily update check (sends
+      nothing about the person or their data; Preferences turns it off; offline it says nothing)
+- [x] The hospital IT answer (`#hospital-it`) and its JSON-LD copy name the update check at github.com, with downloads
+      from release-assets.githubusercontent.com
+- [x] The citation box cites the build date shown in About, not a version number: set `built` in the citation script
+      of `website/index.html` and the box's default text to the published build's date (5 November 2026 for the build
+      of run 42130496240, if that is the one published)
+- [x] `CITATION.cff`: `version` and `date-released` to the published build's date (it still describes 2.5.0, the build
+      published before the updater), its message to "cite the build date your copy shows under About", and the Zenodo
+      DOI the website cites (10.5281/zenodo.23915317)
+- [x] Mark the first published build here, with its build date and build number: built 5 November 2026, 23:39 UTC, build 42130496240 (the CI run ID, from commit 99ca82b), published on both v2.5.0 releases on 6 November 2026
 
 ---
 
