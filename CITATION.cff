@@ -5,9 +5,9 @@ type: software
 authors:
   - family-names: "Vaja"
     given-names: "HariOm S."
-version: "built 6 November 2026"
+version: "built 12 November 2026"
 doi: "10.5281/zenodo.23915317"
-date-released: "2026-11-06"
+date-released: "2026-11-12"
 identifiers:
   - type: doi
     value: "10.5281/zenodo.23915316"
