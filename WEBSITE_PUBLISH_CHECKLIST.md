@@ -21,7 +21,7 @@ to that repository's `main` is the deploy. This file sits outside `website/`, so
       `.../releases/latest/download/MedResearch-Suite-x64.AppImage`. Deploy the site only after both files are attached to
       the release marked Latest, or both Linux buttons answer "not found". Each release's download table needs a row for
       each of the two files before the first publish that carries them (tools/release_files.py notes refuses otherwise).
-      The FAQ's Linux sizes (243 MB and 301 MB) come from a build made under WSL; replace them with the CI build's sizes.
+      The FAQ's Linux sizes (253 MB and 317 MB) are those of CI run 44938958214 (21 November 2026); a later build may differ.
 - [ ] The 2.5.0 Mac file is built from a tag that has the network changes of 15 October 2026. Widen "the
       Windows version" in the FAQ's offline answer to cover the Mac once the Mac build is checked behind a proxy (needs a Mac)
 
