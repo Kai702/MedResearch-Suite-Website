@@ -17,11 +17,12 @@ to that repository's `main` is the deploy. This file sits outside `website/`, so
 - [x] All three buttons resolve to the v2.5.0 files: 251 MB, 313 MB and the 264 MB disk image
 - [x] The FAQ states the same sizes and the Mac requirements (Apple silicon, macOS 14 (Sonoma) or newer)
 - [x] The 2.5.0 Mac build (signed by Meet Radhanpura, notarized and stapled) was attached to v2.5.0 on both repositories on 29 October 2026, the macOS button pointed back at `latest`, and the FAQ's 2.4.0 sentence removed
-- [ ] Linux buttons (added 22 November 2026, not yet live): `.../releases/latest/download/MedResearch-Suite-x64.deb` and
+- [x] Linux downloads (added 22 November 2026; live once the build of 22 November was published): `.../releases/latest/download/MedResearch-Suite-x64.deb` and
       `.../releases/latest/download/MedResearch-Suite-x64.AppImage`. Deploy the site only after both files are attached to
       the release marked Latest, or both Linux buttons answer "not found". Each release's download table needs a row for
       each of the two files before the first publish that carries them (tools/release_files.py notes refuses otherwise).
-      The FAQ's Linux sizes (253 MB and 317 MB) are those of CI run 44938958214 (21 November 2026); a later build may differ.
+      The FAQ's sizes are those of the build of 22 November 2026 (build 44973682241): installer 251 MB, portable 312 MB,
+      .deb 242 MB, AppImage 300 MB.
 - [ ] The 2.5.0 Mac file is built from a tag that has the network changes of 15 October 2026. Widen "the
       Windows version" in the FAQ's offline answer to cover the Mac once the Mac build is checked behind a proxy (needs a Mac)
 
