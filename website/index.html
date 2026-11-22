@@ -254,11 +254,25 @@
   .dl-heading span{font-family:'Poppins',sans-serif; font-weight:800; font-size:.78rem; letter-spacing:.14em;
     text-transform:uppercase; color:var(--mint)}
   .nameplate{max-width:560px; margin-top:6px}
-  .np-row{position:relative; display:block; padding:11px 0; border-top:1px solid var(--line); cursor:pointer;
-    text-decoration:none; color:inherit; transition:opacity .25s var(--ease)}
+  .np-item{border-top:1px solid var(--line)}
+  .np-item:last-child{border-bottom:1px solid var(--line)}
+  .np-row{position:relative; display:block; width:100%; padding:11px 0; cursor:pointer; text-align:left;
+    background:none; border:0; font:inherit; text-decoration:none; color:inherit; transition:opacity .25s var(--ease)}
   .nameplate:hover .np-row{opacity:.4}
-  .nameplate:hover .np-row:hover{opacity:1}
-  .np-row:last-child{border-bottom:1px solid var(--line)}
+  .nameplate:hover .np-item:hover .np-row{opacity:1}
+  /* Windows and Linux open a short menu of their two downloads in place, under the row. */
+  .np-row .chev{align-self:center; color:var(--teal-lite); -webkit-text-fill-color:currentColor;
+    transition:transform .2s var(--ease)}
+  .np-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+  .np-menu{padding:0 0 12px 2px; display:grid; gap:2px}
+  .np-menu[hidden]{display:none}
+  .np-opt{display:flex; align-items:baseline; gap:12px; padding:7px 12px; border-radius:8px; text-decoration:none;
+    color:inherit; border-left:2px solid var(--line); transition:background .2s var(--ease), border-color .2s var(--ease)}
+  .np-opt:hover, .np-opt:focus-visible{background:rgba(93,202,165,.08); border-left-color:var(--teal-lite)}
+  .np-opt-name{font-family:'Poppins',sans-serif; font-weight:700; font-size:.98rem; color:var(--ink); white-space:nowrap}
+  .np-opt-name .arrow{font-size:.8em; color:var(--teal-lite); margin-left:4px}
+  .np-opt-meta{font-size:.72rem; color:var(--muted); letter-spacing:.03em}
+  @media(max-width:480px){ .np-opt{flex-direction:column; gap:2px} }
   .np-row .np-name{font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(1.05rem,.95rem + .5vw,1.3rem);
     line-height:1.2; letter-spacing:-.005em; display:flex; align-items:baseline; gap:10px; color:var(--ink)}
   .np-row:not(.pending):hover .np-name{background:linear-gradient(100deg,#bfeee6 0%,#ffffff 48%,#7fe0c8 52%,#ffffff 56%,#bfeee6 100%);
@@ -267,7 +281,7 @@
   .np-row .np-name .arrow{font-size:.65em; color:var(--teal-lite); opacity:0; transform:translateX(-6px);
     transition:all .2s var(--ease); -webkit-text-fill-color:var(--teal-lite)}
   .np-row:not(.pending):hover .np-name .arrow{opacity:1; transform:translateX(0)}
-  .np-row .np-meta{font-size:.72rem; color:var(--muted); margin-top:3px; letter-spacing:.03em}
+  .np-row .np-meta{display:block; font-size:.72rem; color:var(--muted); margin-top:3px; letter-spacing:.03em}
   .np-row.pending{cursor:default}
   .np-row.pending .np-name{color:var(--muted)}
   .nameplate:hover .np-row.pending{opacity:.4 !important}
@@ -581,26 +595,44 @@
     </p>
     <div class="dl-heading rise d4" id="download"><span>Download It</span></div>
     <div class="nameplate rise d4">
-      <a class="np-row js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.exe">
-        <span class="np-name">Windows Installer <span class="arrow">&rarr;</span></span>
-        <div class="np-meta">Windows 10 &amp; 11</div>
-      </a>
-      <a class="np-row js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.zip">
-        <span class="np-name">Windows Portable <span class="arrow">&rarr;</span></span>
-        <div class="np-meta">no install, no admin rights</div>
-      </a>
-      <a class="np-row" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-arm64.dmg">
-        <span class="np-name">macOS <span class="arrow">&rarr;</span></span>
-        <div class="np-meta">Apple silicon, macOS 14 or newer</div>
-      </a>
-      <a class="np-row" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-x64.deb">
-        <span class="np-name">Linux Package <span class="arrow">&rarr;</span></span>
-        <div class="np-meta">.deb for Ubuntu 22.04 or newer &amp; Debian 12 or newer</div>
-      </a>
-      <a class="np-row" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-x64.AppImage">
-        <span class="np-name">Linux AppImage <span class="arrow">&rarr;</span></span>
-        <div class="np-meta">other distributions, no install</div>
-      </a>
+      <div class="np-item">
+        <button type="button" class="np-row np-toggle" aria-expanded="false" aria-controls="dlWindows">
+          <span class="np-name">Windows <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+          <span class="np-meta">Windows 10 &amp; 11: installer or portable</span>
+        </button>
+        <div class="np-menu" id="dlWindows" hidden>
+          <a class="np-opt js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.exe">
+            <span class="np-opt-name">Installer <span class="arrow">&rarr;</span></span>
+            <span class="np-opt-meta">installs like any program, with a Start menu entry</span>
+          </a>
+          <a class="np-opt js-win-download" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite.zip">
+            <span class="np-opt-name">Portable <span class="arrow">&rarr;</span></span>
+            <span class="np-opt-meta">no install, no admin rights</span>
+          </a>
+        </div>
+      </div>
+      <div class="np-item">
+        <a class="np-row" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-arm64.dmg">
+          <span class="np-name">macOS <span class="arrow">&rarr;</span></span>
+          <div class="np-meta">Apple silicon, macOS 14 or newer</div>
+        </a>
+      </div>
+      <div class="np-item">
+        <button type="button" class="np-row np-toggle" aria-expanded="false" aria-controls="dlLinux">
+          <span class="np-name">Linux <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+          <span class="np-meta">Intel or AMD processor: .deb package or AppImage</span>
+        </button>
+        <div class="np-menu" id="dlLinux" hidden>
+          <a class="np-opt" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-x64.deb">
+            <span class="np-opt-name">.deb Package <span class="arrow">&rarr;</span></span>
+            <span class="np-opt-meta">Ubuntu 22.04 or newer &amp; Debian 12 or newer</span>
+          </a>
+          <a class="np-opt" href="https://github.com/Kai702/MedResearch-Suite-Website/releases/latest/download/MedResearch-Suite-x64.AppImage">
+            <span class="np-opt-name">AppImage <span class="arrow">&rarr;</span></span>
+            <span class="np-opt-meta">other distributions, no install (needs libfuse2)</span>
+          </a>
+        </div>
+      </div>
     </div>
     <p class="note rise d4">Free. No account, no sign up. Once installed, it keeps itself up to date; a copy installed before November 2026 needs this download once.</p>
 
@@ -1548,6 +1580,28 @@
       f.setAttribute('allowfullscreen', '');
       box.replaceChild(f, link);
       f.focus();
+    });
+  })();
+
+  // Download menus: Windows and Linux each open their two downloads in place; one menu open at a time, Escape closes
+  // it and returns to its button.
+  (function () {
+    var toggles = Array.prototype.slice.call(document.querySelectorAll('.np-toggle'));
+    function setOpen(btn, open) {
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var menu = document.getElementById(btn.getAttribute('aria-controls'));
+      if (menu) menu.hidden = !open;
+    }
+    toggles.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') !== 'true';
+        toggles.forEach(function (other) { if (other !== btn) setOpen(other, false); });
+        setOpen(btn, open);
+      });
+      var menu = document.getElementById(btn.getAttribute('aria-controls'));
+      if (menu) menu.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { setOpen(btn, false); btn.focus(); }
+      });
     });
   })();
 
